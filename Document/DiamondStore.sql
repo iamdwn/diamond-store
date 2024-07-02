@@ -21,6 +21,7 @@ CREATE TABLE "User" (
     Password VARCHAR(50) NOT NULL,
     Email VARCHAR(100) NOT NULL,
     RoleId UNIQUEIDENTIFIER,
+    Status VARCHAR(50) NOT NULL,
     FOREIGN KEY (RoleId) REFERENCES Role(RoleId)
 );
 
@@ -87,6 +88,7 @@ CREATE TABLE Product (
     Name VARCHAR(50) NOT NULL,
     Description TEXT,
     Price DECIMAL(10,2) NOT NULL,
+    IsExpired BIT NOT NULL DEFAULT 0,
     CategoryId UNIQUEIDENTIFIER,
     FOREIGN KEY (CategoryId) REFERENCES Category(CategoryId)
 );
@@ -108,6 +110,7 @@ CREATE TABLE Delivery (
     OrderId UNIQUEIDENTIFIER,
     ShiperId UNIQUEIDENTIFIER,
     ManagerId UNIQUEIDENTIFIER,
+    Status VARCHAR(50) NOT NULL,
     FOREIGN KEY (OrderId) REFERENCES "Order"(OrderId),
     FOREIGN KEY (ShiperId) REFERENCES "User"(UserId),
     FOREIGN KEY (ManagerId) REFERENCES "User"(UserId)
@@ -134,12 +137,12 @@ INSERT INTO Role (RoleName) VALUES
     ('Support');
 
 -- Insert sample data into User table
-INSERT INTO "User" (Username, Password, Email, RoleId) VALUES
-    ('customer1', 'password1', 'customer1@example.com', (SELECT RoleId FROM Role WHERE RoleName='Customer')),
-    ('customer2', 'password2', 'customer2@example.com', (SELECT RoleId FROM Role WHERE RoleName='Customer')),
-    ('shiper1', 'password1', 'shiper1@example.com', (SELECT RoleId FROM Role WHERE RoleName='Shiper')),
-    ('manager1', 'password1', 'manager1@example.com', (SELECT RoleId FROM Role WHERE RoleName='Manager')),
-    ('admin1', 'password1', 'admin1@example.com', (SELECT RoleId FROM Role WHERE RoleName='Admin'));
+INSERT INTO "User" (Username, Password, Email, RoleId, Status) VALUES
+    ('customer1', 'password1', 'customer1@example.com', (SELECT RoleId FROM Role WHERE RoleName='Customer'), 'Active'),
+    ('customer2', 'password2', 'customer2@example.com', (SELECT RoleId FROM Role WHERE RoleName='Customer'), 'Active'),
+    ('shiper1', 'password1', 'shiper1@example.com', (SELECT RoleId FROM Role WHERE RoleName='Shiper'), 'Active'),
+    ('manager1', 'password1', 'manager1@example.com', (SELECT RoleId FROM Role WHERE RoleName='Manager'), 'Active'),
+    ('admin1', 'password1', 'admin1@example.com', (SELECT RoleId FROM Role WHERE RoleName='Admin'), 'Active');
 
 -- Insert sample data into Voucher table
 INSERT INTO Voucher (Name, DiscountPercentage, StartDate, EndDate) VALUES
@@ -174,12 +177,12 @@ INSERT INTO Category (GiaCertificate, Cut, Color, Clarity, Carat, DistributorId)
     ('GIA112233', 'Cushion', 'H', 'IF', 1.25, (SELECT DistributorId FROM Distributor WHERE DistributorName='Luxury Gems'));
 
 -- Insert sample data into Product table
-INSERT INTO Product (Name, Description, Price, CategoryId) VALUES
-    ('Round Cut Diamond', 'A beautiful round cut diamond', 15000.00, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA123456')),
-    ('Princess Cut Diamond', 'A stunning princess cut diamond', 20000.00, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA654321')),
-    ('Emerald Cut Diamond', 'A magnificent emerald cut diamond', 17500.00, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA987654')),
-    ('Oval Cut Diamond', 'An exquisite oval cut diamond', 25000.00, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA456789')),
-    ('Cushion Cut Diamond', 'A gorgeous cushion cut diamond', 12500.00, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA112233'));
+INSERT INTO Product (Name, Description, Price, IsExpired, CategoryId) VALUES
+    ('Round Cut Diamond', 'A beautiful round cut diamond', 15000.00, 0, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA123456')),
+    ('Princess Cut Diamond', 'A stunning princess cut diamond', 20000.00, 0, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA654321')),
+    ('Emerald Cut Diamond', 'A magnificent emerald cut diamond', 17500.00, 0, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA987654')),
+    ('Oval Cut Diamond', 'An exquisite oval cut diamond', 25000.00, 0, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA456789')),
+    ('Cushion Cut Diamond', 'A gorgeous cushion cut diamond', 12500.00, 0, (SELECT CategoryId FROM Category WHERE GiaCertificate='GIA112233'));
 
 -- Insert sample data into Order table
 INSERT INTO "Order" (UserId, OrderDate, TotalAmount, Status, VoucherId, TotalPrice) VALUES
@@ -193,9 +196,9 @@ INSERT INTO OrderItem (OrderId, ProductId) VALUES
     ((SELECT OrderId FROM "Order" WHERE UserId=(SELECT UserId FROM "User" WHERE Username='customer2')), (SELECT ProductId FROM Product WHERE Name='Emerald Cut Diamond'));
 
 -- Insert sample data into Delivery table
-INSERT INTO Delivery (OrderId, ShiperId, ManagerId) VALUES
-    ((SELECT OrderId FROM "Order" WHERE UserId=(SELECT UserId FROM "User" WHERE Username='customer1')), (SELECT UserId FROM "User" WHERE Username='shiper1'), (SELECT UserId FROM "User" WHERE Username='manager1')),
-    ((SELECT OrderId FROM "Order" WHERE UserId=(SELECT UserId FROM "User" WHERE Username='customer2')), (SELECT UserId FROM "User" WHERE Username='shiper1'), (SELECT UserId FROM "User" WHERE Username='manager1'));
+INSERT INTO Delivery (OrderId, ShiperId, ManagerId, Status) VALUES
+    ((SELECT OrderId FROM "Order" WHERE UserId=(SELECT UserId FROM "User" WHERE Username='customer1')), (SELECT UserId FROM "User" WHERE Username='shiper1'), (SELECT UserId FROM "User" WHERE Username='manager1'), 'Shipped'),
+    ((SELECT OrderId FROM "Order" WHERE UserId=(SELECT UserId FROM "User" WHERE Username='customer2')), (SELECT UserId FROM "User" WHERE Username='shiper1'), (SELECT UserId FROM "User" WHERE Username='manager1'), 'Pending');
 
 -- Insert sample data into Warranty table
 INSERT INTO Warranty (ProductId, UserId, IssueDate, ExpirationDate) VALUES
