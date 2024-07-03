@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BussinessObject.Models;
+﻿namespace BussinessObject.Models;
 
 public partial class Voucher
 {
