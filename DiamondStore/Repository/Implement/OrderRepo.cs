@@ -13,7 +13,7 @@ namespace Repository.Implement
             {
                 using (var _context = new DiamondStoreContext())
                 {
-                    return await _context.Orders.FirstAsync(o => o.OrderId.ToString() == id);
+                    return await _context.Orders.FirstAsync(o => o.OrderId == Guid.Parse(id));
                 }
             }
             catch (Exception ex)
@@ -54,10 +54,12 @@ namespace Repository.Implement
                 {
                     var order = await _context.Orders
                                               .Include(o => o.OrderItems)
-                                              .FirstOrDefaultAsync(o => o.OrderId.ToString() == id);
+                                              .Include(o => o.Deliveries) // Include deliveries
+                                              .FirstOrDefaultAsync(o => o.OrderId == Guid.Parse(id));
                     if (order != null)
                     {
                         _context.OrderItems.RemoveRange(order.OrderItems);
+                        _context.Deliveries.RemoveRange(order.Deliveries); // Remove deliveries
                         _context.Orders.Remove(order);
                         await _context.SaveChangesAsync();
                     }

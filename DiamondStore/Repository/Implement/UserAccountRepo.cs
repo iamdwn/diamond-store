@@ -13,7 +13,7 @@ namespace Repository.Implement
             {
                 using (var _content = new DiamondStoreContext())
                 {
-                    return await _content.Users.FirstAsync(x => x.UserId.Equals(id));
+                    return await _content.Users.FirstAsync(x => x.UserId == Guid.Parse(id));
                 }
             }
 
