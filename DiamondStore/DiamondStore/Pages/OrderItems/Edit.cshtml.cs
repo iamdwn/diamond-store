@@ -1,23 +1,27 @@
-﻿using BussinessObject.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using BussinessObject.Models;
 using Service.Interface;
 
-namespace DiamondStore.Pages.Orders
+namespace DiamondStore.Pages.OrderItems
 {
     public class EditModel : PageModel
     {
-        private readonly IOrderService _context;
+        private readonly IOrderItemService _context;
 
-        public EditModel(IOrderService orderService)
+        public EditModel(IOrderItemService context)
         {
-            _context = orderService;
-            
+            _context = context;
         }
 
         [BindProperty]
-        public Order Order { get; set; } = default!;
+        public OrderItem OrderItem { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -26,16 +30,15 @@ namespace DiamondStore.Pages.Orders
                 return NotFound();
             }
 
-            //var order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderId == id);
-            var order = await _context.GetByIdAsync(id.ToString());
+            var orderitem = await _context.GetByIdAsync(id.ToString());
 
-            if (order == null)
+            if (orderitem == null)
             {
                 return NotFound();
             }
-            Order = order;
-            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
-            //ViewData["VoucherId"] = new SelectList(_context.Vouchers, "VoucherId", "Name");
+            OrderItem = orderitem;
+           //ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "Status");
+           //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name");
             return Page();
         }
 
@@ -50,11 +53,11 @@ namespace DiamondStore.Pages.Orders
 
             try
             {
-                await _context.UpdateAsync(Order);
+                await _context.UpdateAsync(OrderItem);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(Order.OrderId))
+                if (!OrderItemExists(OrderItem.OrderItemId))
                 {
                     return NotFound();
                 }
@@ -67,7 +70,7 @@ namespace DiamondStore.Pages.Orders
             return RedirectToPage("./Index");
         }
 
-        private bool OrderExists(Guid id)
+        private bool OrderItemExists(Guid id)
         {
             if (_context.GetByIdAsync(id.ToString()) == null)
             {

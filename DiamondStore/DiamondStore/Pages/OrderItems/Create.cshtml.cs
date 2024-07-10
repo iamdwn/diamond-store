@@ -6,38 +6,38 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BussinessObject.Models;
-using Service.Interface;
 
-namespace DiamondStore.Pages.Orders
+namespace DiamondStore.Pages.OrderItems
 {
     public class CreateModel : PageModel
     {
-        private readonly IOrderService _context;
+        private readonly BussinessObject.Models.DiamondStoreContext _context;
 
-        public CreateModel(IOrderService orderService)
+        public CreateModel(BussinessObject.Models.DiamondStoreContext context)
         {
-            _context = orderService;
+            _context = context;
         }
 
         public IActionResult OnGet()
         {
-        //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
-        //ViewData["VoucherId"] = new SelectList(_context.Vouchers, "VoucherId", "Name");
+        //ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "Status");
+        //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name");
             return Page();
         }
 
         [BindProperty]
-        public Order Order { get; set; } = default!;
+        public OrderItem OrderItem { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            await _context.AddAsync(Order);
+            
+            await _context.AddAsync(OrderItem);
 
             return RedirectToPage("./Index");
         }

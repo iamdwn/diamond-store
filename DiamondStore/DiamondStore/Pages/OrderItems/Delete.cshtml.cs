@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Service.Interface;
 
-namespace DiamondStore.Pages.Orders
+namespace DiamondStore.Pages.OrderItems
 {
     public class DeleteModel : PageModel
     {
-        private readonly IOrderService _context;
+        private readonly IOrderItemService _context;
 
-        public DeleteModel(IOrderService context)
+        public DeleteModel(IOrderItemService context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Order Order { get; set; } = default!;
+        public OrderItem OrderItem { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -29,15 +29,15 @@ namespace DiamondStore.Pages.Orders
                 return NotFound();
             }
 
-            var order = await _context.GetByIdAsync(id.ToString());
+            var orderitem = await _context.GetByIdAsync(id.ToString());
 
-            if (order == null)
+            if (orderitem == null)
             {
                 return NotFound();
             }
             else
             {
-                Order = order;
+                OrderItem = orderitem;
             }
             return Page();
         }
@@ -49,8 +49,9 @@ namespace DiamondStore.Pages.Orders
                 return NotFound();
             }
 
-            var order = await _context.GetByIdAsync(id.ToString());
-            if (order != null)
+            var orderitem = await _context.GetByIdAsync(id.ToString());
+
+            if (orderitem != null)
             {
                 await _context.DeleteAsync(id.ToString());
             }
