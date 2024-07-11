@@ -62,7 +62,10 @@ namespace Repository.Implement
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using (var context = new DiamondStoreContext())
+            {
+                return await context.Users.ToListAsync();
+            }
         }
     }
 }

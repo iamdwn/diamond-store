@@ -13,6 +13,11 @@ namespace Service.Implement
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }
 
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            return await _repo.GetAllAsync();
+        }
+
         public async Task<User> GetByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
