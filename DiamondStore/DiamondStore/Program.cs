@@ -1,7 +1,23 @@
+using BussinessObject.Models;
+using Repository.Implement;
+using Repository.Interface;
+using Service.Implement;
+using Service.Interface;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Add repo to container
+builder.Services.AddScoped<IBaseCRUD<Order>, OrderRepo>();
+builder.Services.AddScoped<IBaseCRUD<OrderItem>, OrderItemRepo>();
+builder.Services.AddScoped<IBaseCRUD<User>, UserAccountRepo>();
+
+// Add service to container
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 
 var app = builder.Build();
 
