@@ -13,7 +13,7 @@ namespace Repository.Implement
             {
                 using (var _context = new DiamondStoreContext())
                 {
-                    return await _context.OrderItems.FirstAsync(oi => oi.OrderItemId.ToString() == id);
+                    return await _context.OrderItems.FirstAsync(oi => oi.OrderItemId == Guid.Parse(id));
                 }
             }
             catch (Exception ex)

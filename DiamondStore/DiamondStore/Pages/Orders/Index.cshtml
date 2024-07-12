@@ -1,0 +1,94 @@
+﻿@page
+@model DiamondStore.Pages.Orders.IndexModel
+
+@{
+    ViewData["Title"] = "Order";
+}
+
+<div class="relative overflow-x-auto py-4">
+    <div class="flex justify-between my-4">
+        <h1 class="text-3xl font-bold col-span-3">Orders</h1>
+
+        <a asp-page="./Create">
+            <button type="button" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800">
+                Create
+            </button>
+        </a>
+    </div>
+
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.Order[0].Id)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.Order[0].OrderDate)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.Order[0].TotalAmount)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.Order[0].Status)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.Order[0].TotalPrice)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.Order[0].User)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.Order[0].Voucher)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @foreach (var item in Model.Order)
+            {
+                <tr class="bg-white border-b">
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.TotalAmount)
+                    </td>
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.User.Email)
+                    </td>
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.Voucher.Name)
+                    </td>
+                    <td class="px-6 py-4">
+                        <a asp-page="./Edit" asp-route-id="@item.OrderId">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                Update
+                            </button>
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@item.OrderId">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                Details
+                            </button>
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@item.OrderId">
+                            <button type="submit" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                Delete
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
