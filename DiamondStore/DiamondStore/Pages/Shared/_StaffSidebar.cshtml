@@ -1,0 +1,39 @@
+﻿@{
+    string currentPageUrl = Context.Request.Path;
+
+    ViewData["NavLinks"] = new[]
+    {
+        new { Href = "/Index", IconClass = "fas fa-tachometer-alt", Children = "Home" },
+        new { Href = "/Privacy", IconClass = "fas fa-bullhorn", Children = "Privacy" },
+        new { Href = "/Orders", IconClass = "fas fa-school", Children = "Orders" },
+        new { Href = "/OrderItems", IconClass = "fas fa-file-alt", Children = "Order Items" },
+    };
+}
+
+<div class="flex w-full flex-col overflow-hidden rounded-lg bg-white text-gray-600 md:w-64">
+    <!-- Logo -->
+    <div class="hidden h-16 items-center justify-center text-white md:flex">
+        <h1 class="mt-2 bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-2xl font-extrabold text-transparent">
+            DiamondStore
+        </h1>
+    </div>
+    <div class="my-2 flex flex-1 flex-col justify-between rounded-lg transition-colors duration-300 md:my-4">
+        <!-- Navigation Links -->
+        <div class="hidden md:block">
+            @foreach (var link in (IEnumerable<dynamic>)ViewData["NavLinks"])
+            {
+                <a href="@link.Href" class="mx-4 my-2 flex items-center rounded-xl p-4 text-sm font-medium transition-colors duration-300 hover:bg-gray-200 @if (currentPageUrl.StartsWith(link.Href)) {
+                    <text>bg-blue-500 font-bold text-white hover:bg-blue-600 before:absolute before:left-0 before:w-[5px] before:h-8 before:bg-blue-500 before:rounded-r-lg</text>
+                 }">
+                    <i class="@link.IconClass text-md mr-4"></i>
+                    @link.Children
+                </a>    
+            }
+        </div>
+        <!-- Sign out -->
+        <a href="/" class="mx-4 my-2 flex w-fit cursor-pointer items-center gap-2 rounded-xl bg-white p-4 font-medium transition-colors duration-300 hover:bg-gray-100 md:w-auto md:flex-none md:justify-start">
+            <i class="fas fa-sign-out-alt text-md"></i>
+            <span class="hidden md:block">Sign Out</span>
+        </a>
+    </div>
+</div>
