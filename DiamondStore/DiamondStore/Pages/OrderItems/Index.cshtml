@@ -2,47 +2,70 @@
 @model DiamondStore.Pages.OrderItems.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Order Items";
 }
 
-<h1>Index</h1>
+<div class="relative overflow-x-auto py-4">
+    <div class="flex justify-between my-4">
+        <h1 class="text-3xl font-bold col-span-3">Order Items</h1>
+        
+        <a asp-page="./Create">
+            <button type="button" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800">
+                Create
+            </button>
+        </a>
+    </div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderItem[0].Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderItem[0].Order)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderItem[0].Product)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.OrderItem) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.OrderItemId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.OrderItemId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.OrderItemId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.OrderItem[0].Id)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.OrderItem[0].Order)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.OrderItem[0].Product)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @foreach (var item in Model.OrderItem)
+            {
+                <tr class="bg-white border-b">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayNameFor(model => model.OrderItem[0].Order)
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </th>
+                    <td class="px-6 py-4">
+                        <a asp-page="./Edit" asp-route-id="@item.OrderItemId">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                Update
+                            </button>
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@item.OrderItemId">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                Details
+                            </button>
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@item.OrderItemId">
+                            <button type="submit" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                Delete
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
