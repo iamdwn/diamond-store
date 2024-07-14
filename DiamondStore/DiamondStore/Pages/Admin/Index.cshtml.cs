@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Service.Interface;
 using Service.Implement;
+using BussinessObject.DTO;
 
 namespace DiamondStore.Pages.Admin
 {
@@ -17,17 +18,10 @@ namespace DiamondStore.Pages.Admin
 
         public IndexModel(IUserAccountService userAccountService)
         {
-            _userAccountService = userAccountService ?? throw new ArgumentNullException(nameof(userAccountService));
+            _userAccountService = userAccountService;
         }
 
-        //private readonly BussinessObject.Models.DiamondStoreContext _context;
-
-        //public IndexModel(BussinessObject.Models.DiamondStoreContext context)
-        //{
-        //    _context = context;
-        //}
-
-        public IEnumerable<User> user { get;set; } = default!;
+        public IList<UserDTO> user { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
@@ -37,8 +31,7 @@ namespace DiamondStore.Pages.Admin
             //    Response.Redirect("/Login");
             //}
 
-            user = await _userAccountService.GetAllAsync();
-
+            user = await _userAccountService.GetAllAsyncByAdmin();
 
             //User = await _context.Users
             //    .Include(u => u.Role).ToListAsync();

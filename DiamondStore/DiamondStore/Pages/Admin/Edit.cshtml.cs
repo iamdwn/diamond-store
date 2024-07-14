@@ -7,20 +7,36 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
+using BussinessObject.DTO;
+using Service.Interface;
+using System.Data;
 
 namespace DiamondStore.Pages.Admin
 {
     public class EditModel : PageModel
     {
-        private readonly BussinessObject.Models.DiamondStoreContext _context;
+        private readonly IUserAccountService _userAccountService;
+        private readonly IRoleService _roleService;
 
-        public EditModel(BussinessObject.Models.DiamondStoreContext context)
+        public EditModel(IUserAccountService userAccountService, IRoleService roleService)
         {
-            _context = context;
+            _userAccountService = userAccountService;
+            _roleService = roleService;
         }
 
         [BindProperty]
-        public User User { get; set; } = default!;
+        public UserDTO user { get; set; } = default!;
+
+        Dictionary<int, string> roles = new Dictionary<int, string>
+            {
+                { 1, "Customer" },
+                { 2, "Shipper" },
+                { 3, "Manager" },
+                { 4, "Admin" },
+                { 5, "Support" }
+            };
+
+        public List<string> Status = new List<string> { "Active", "Inactive" };
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -28,14 +44,18 @@ namespace DiamondStore.Pages.Admin
             {
                 return NotFound();
             }
+            //Bắt lỗi validation
 
-            var user =  await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
+             user = await _userAccountService.GetByIdAsyncByAdmin(id.ToString());
+
             if (user == null)
             {
                 return NotFound();
             }
-            User = user;
-           ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
+
+
+            ViewData["RoleId"] = new SelectList(roles,"Key","Value");
+            ViewData["StatusState"] = new SelectList(Status);
             return Page();
         }
 
@@ -43,35 +63,50 @@ namespace DiamondStore.Pages.Admin
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+
+            var data = await _userAccountService.GetByIdAsyncByAdmin(user.UserId.ToString());
+
+            if (user.Username != null)
             {
-                return Page();
+                data.Username = user.Username;
+            } 
+
+            if (user.Email != null)
+            {
+                data.Email = user.Email;
             }
 
-            _context.Attach(User).State = EntityState.Modified;
+            if (user.Status != null)
+            {
+                data.Status = user.Status;
+            }
 
-            try
+
+            if (roles.TryGetValue(int.Parse(user.RoleName), out string roleName))
             {
-                await _context.SaveChangesAsync();
+                var role = await _roleService.GetRoleByName(roleName);
+                data.RoleId = role.RoleId;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(User.UserId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
+
+            await _userAccountService.UpdateAsyncByAdmin(data);
+
 
             return RedirectToPage("./Index");
         }
 
         private bool UserExists(Guid id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            if (_userAccountService.GetByIdAsyncByAdmin(id.ToString()) != null)
+            {
+                return true;
+            }
+            return false;
+
         }
     }
 }

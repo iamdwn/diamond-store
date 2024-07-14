@@ -13,7 +13,7 @@ namespace Repository.Implement
             {
                 using (var _content = new DiamondStoreContext())
                 {
-                    return await _content.Users.FirstAsync(x => x.UserId == Guid.Parse(id));
+                    return await _content.Users.Include(r => r.Role).FirstAsync(x => x.UserId == Guid.Parse(id));
                 }
             }
 
@@ -32,8 +32,7 @@ namespace Repository.Implement
                     var user = await _context.Users.FindAsync(entity.UserId);
                     if (user != null)
                     {
-                        user.Password = entity.Password;
-                        user.Email = entity.Email;
+                        _context.Entry(user).CurrentValues.SetValues(entity);
                         await _context.SaveChangesAsync();
                     }
                     return user;
@@ -64,7 +63,7 @@ namespace Repository.Implement
         {
             using (var context = new DiamondStoreContext())
             {
-                return await context.Users.ToListAsync();
+                return await context.Users.Include(r => r.Role).ToListAsync();
             }
         }
     }
