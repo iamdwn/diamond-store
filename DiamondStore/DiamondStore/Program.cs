@@ -13,11 +13,13 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IBaseCRUD<Order>, OrderRepo>();
 builder.Services.AddScoped<IBaseCRUD<OrderItem>, OrderItemRepo>();
 builder.Services.AddScoped<IBaseCRUD<User>, UserAccountRepo>();
+builder.Services.AddScoped<IBaseCRUD<Product>, ProductRepo>();
 
 // Add service to container
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

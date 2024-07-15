@@ -21,7 +21,7 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                var entity = await _context.Set<Voucher>().FindAsync(id);
+                var entity = await _context.Set<Voucher>().FindAsync(Guid.Parse(id));
                 if (entity != null)
                 {
                     _context.Vouchers.Remove(entity);
@@ -50,7 +50,7 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Vouchers.FindAsync(id);
+                return await _context.Vouchers.FindAsync(Guid.Parse(id));
             }
         }
 
