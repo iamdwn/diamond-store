@@ -1,4 +1,5 @@
-﻿using BussinessObject.Models;
+﻿using BussinessObject.DTO;
+using BussinessObject.Models;
 using System.Linq.Expressions;
 
 namespace Service.Interface
@@ -11,5 +12,6 @@ namespace Service.Interface
         Task<Delivery> AddAsync(Delivery entity);
         Task<Delivery> UpdateAsync(Delivery entity);
         Task DeleteAsync(string id);
+        Task<List<DeliveryResponse>> GetDeliveryResponsesByAdmin();
     }
 }
