@@ -1,4 +1,5 @@
 ﻿using BussinessObject.Models;
+using System.Linq.Expressions;
 
 namespace Service.Interface
 {
@@ -9,5 +10,6 @@ namespace Service.Interface
         Task AddAsync(Order entity);
         Task UpdateAsync(Order entity);
         Task DeleteAsync(string id);
+        Task<IEnumerable<Order>> FindAsync(Expression<Func<Order, bool>> predicate);
     }
 }
