@@ -1,6 +1,7 @@
 ﻿using BussinessObject.Models;
 using Repository.Interface;
 using Service.Interface;
+using System.Linq.Expressions;
 
 namespace Service.Implement
 {
@@ -75,6 +76,15 @@ namespace Service.Implement
             }
 
             await _repo.DeleteAsync(id);
+        }
+
+        public async Task<IEnumerable<OrderItem>> FindAsync(Expression<Func<OrderItem, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentException("Predicate is null");
+            }
+            return await _repo.FindAsync(predicate);
         }
     }
 }

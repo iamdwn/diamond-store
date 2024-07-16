@@ -1,6 +1,7 @@
 ﻿using BussinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Repository.Implement
@@ -65,7 +66,17 @@ namespace Repository.Implement
 
         public async Task<IEnumerable<OrderItem>> FindAsync(Expression<Func<OrderItem, bool>> predicate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var _context = new DiamondStoreContext())
+                {
+                    return await _context.OrderItems.AsNoTracking().Where(predicate).ToListAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<OrderItem> AddAsync(OrderItem entity)
