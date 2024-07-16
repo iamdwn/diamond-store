@@ -10,5 +10,6 @@ namespace Service.Interface
     public interface IRoleService
     {
         Task<Role> GetRoleByName(string name); 
+        Task<Role> GetRoleById(Guid id); 
     }
 }
