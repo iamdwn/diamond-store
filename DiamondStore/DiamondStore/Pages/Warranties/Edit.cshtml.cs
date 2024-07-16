@@ -1,23 +1,31 @@
-﻿using BussinessObject.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using BussinessObject.Models;
 using Service.Interface;
+using Service.Implement;
 
-namespace DiamondStore.Pages.Orders
+namespace DiamondStore.Pages.Warranties
 {
     public class EditModel : PageModel
     {
-        private readonly IOrderService _context;
+        private readonly IWarrantyService _context;
+        private readonly IProductService _productService;
 
-        public EditModel(IOrderService orderService)
+
+        public EditModel(IWarrantyService context, IProductService productService)
         {
-            _context = orderService;
-
+            _context = context;
+            _productService = productService;
         }
 
         [BindProperty]
-        public Order Order { get; set; } = default!;
+        public Warranty Warranty { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -26,16 +34,19 @@ namespace DiamondStore.Pages.Orders
                 return NotFound();
             }
 
-            //var order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderId == id);
-            var order = await _context.GetByIdAsync(id.ToString());
-
-            if (order == null)
+            var warranty = await _context.GetByIdAsync(id.ToString());
+            if (warranty == null)
             {
                 return NotFound();
             }
-            Order = order;
-            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
-            //ViewData["VoucherId"] = new SelectList(_context.Vouchers, "VoucherId", "Name");
+            Warranty = warranty;
+
+            var products = await _productService.GetAllAsync();
+            //var users = await _userService.GetAllAsync();
+
+
+            ViewData["ProductId"] = new SelectList(products, "ProductId", "Name");
+            //ViewData["UserId"] = new SelectList(users, "UserId", "Email");
             return Page();
         }
 
@@ -48,13 +59,15 @@ namespace DiamondStore.Pages.Orders
                 return Page();
             }
 
+            //_context.Attach(Warranty).State = EntityState.Modified;
+
             try
             {
-                await _context.UpdateAsync(Order);
+                await _context.UpdateAsync(Warranty);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(Order.OrderId))
+                if (!WarrantyExists(Warranty.WarrantyId))
                 {
                     return NotFound();
                 }
@@ -67,7 +80,7 @@ namespace DiamondStore.Pages.Orders
             return RedirectToPage("./Index");
         }
 
-        private bool OrderExists(Guid id)
+        private bool WarrantyExists(Guid id)
         {
             if (_context.GetByIdAsync(id.ToString()) == null)
             {
