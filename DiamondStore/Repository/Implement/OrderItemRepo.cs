@@ -70,7 +70,7 @@ namespace Repository.Implement
             {
                 using (var _context = new DiamondStoreContext())
                 {
-                    return await _context.OrderItems.AsNoTracking().Where(predicate).ToListAsync();
+                    return await _context.OrderItems.Include(p => p.Product).Where(predicate).ToListAsync();
                 }
             }
             catch (Exception ex)
