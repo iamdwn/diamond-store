@@ -15,7 +15,8 @@ builder.Services.AddScoped<IBaseCRUD<OrderItem>, OrderItemRepo>();
 builder.Services.AddScoped<IBaseCRUD<User>, UserAccountRepo>();
 builder.Services.AddScoped<IBaseCRUD<Warranty>, WarrantyRepo>();
 builder.Services.AddScoped<IBaseCRUD<Product>, ProductRepo>();
-
+builder.Services.AddScoped<IBaseCRUD<Role>, RoleRepo>();
+builder.Services.AddScoped<IBaseCRUD<Delivery>, DeliveryRepo>();
 
 // Add service to container
 builder.Services.AddScoped<IOrderService, OrderService>();
@@ -23,6 +24,8 @@ builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 builder.Services.AddScoped<IWarrantyService, WarrantyService>();
 builder.Services.AddScoped<IProductService,ProductService >();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IDeliveryService, DeliveryService>();
 
 var app = builder.Build();
 

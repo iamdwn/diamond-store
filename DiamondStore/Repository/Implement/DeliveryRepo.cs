@@ -42,7 +42,7 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Deliveries.ToListAsync();
+                return await _context.Deliveries.Include(o => o.Order).ToListAsync();
             }
         }
 
