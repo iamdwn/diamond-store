@@ -17,7 +17,17 @@ namespace Repository.Implement
             throw new NotImplementedException();
         }
 
+        public Task<bool> CreateAsync(Role entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task DeleteAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Role> Find(Expression<Func<Role, bool>> predicate)
         {
             throw new NotImplementedException();
         }
@@ -44,6 +54,11 @@ namespace Repository.Implement
         }
 
         public Task<Role> GetByIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Update(Role entity)
         {
             throw new NotImplementedException();
         }

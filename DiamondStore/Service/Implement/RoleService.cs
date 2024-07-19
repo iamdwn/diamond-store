@@ -18,6 +18,20 @@ namespace Service.Implement
             _repo = repo;
         }
 
+        public async Task<Role> GetRoleById(Guid id)
+        {
+            var roles = await _repo.FindAsync(x => x.RoleId.Equals(id));
+
+            if (roles == null)
+            {
+                throw new KeyNotFoundException("Role not found");
+            }
+
+            var result = roles.FirstOrDefault();
+
+            return result;
+        }
+
         public async Task<Role> GetRoleByName(string name)
         {
             if (string.IsNullOrEmpty(name))

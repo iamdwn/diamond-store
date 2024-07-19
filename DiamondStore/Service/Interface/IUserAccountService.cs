@@ -1,5 +1,7 @@
 ﻿using BussinessObject.DTO;
 using BussinessObject.Models;
+using Repository.Dtos;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Service.Interface
@@ -12,6 +14,9 @@ namespace Service.Interface
         Task UpdateAsyncByAdmin(UserDTO entity);
         Task<List<User>> GetAllAsync();
         Task<List<UserDTO>> GetAllAsyncByAdmin();
-
+        Task<User?> Login(string email, string password);
+        Task<bool> Register(RegisterDto dto);
+        Task<User?> GetUser(Expression<Func<User, bool>> predicate);
+        Task<bool> UpdateUser(User user);
     }
 }

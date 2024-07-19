@@ -14,6 +14,5 @@ namespace BussinessObject.DTO
         public Guid? RoleId { get; set; }
         public string RoleName { get; set; }
         public string Status { get; set; } = null!;
-
     }
 }
