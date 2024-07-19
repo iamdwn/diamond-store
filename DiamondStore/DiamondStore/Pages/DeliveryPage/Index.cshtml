@@ -65,7 +65,14 @@
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Model.product
+                        @foreach(var productItem in item.Product)
+                        {
+                          <a>
+                          @Html.DisplayFor(modelItem => productItem)
+                            </a>
+                            <br/>
+                        }
+
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductPrice)
