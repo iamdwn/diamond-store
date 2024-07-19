@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Vouchers\**" />
+    <Content Remove="Pages\Vouchers\**" />
+    <EmbeddedResource Remove="Pages\Vouchers\**" />
+    <None Remove="Pages\Vouchers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 

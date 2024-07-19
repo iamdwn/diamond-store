@@ -24,6 +24,7 @@ builder.Services.AddScoped<IBaseCRUD<OrderItem>, OrderItemRepo>();
 builder.Services.AddScoped<IBaseCRUD<User>, UserAccountRepo>();
 builder.Services.AddScoped<IBaseCRUD<Role>, RoleRepo>();
 builder.Services.AddScoped<IBaseCRUD<Delivery>, DeliveryRepo>();
+builder.Services.AddScoped<IBaseCRUD<Product>, ProductRepo>();
 
 // Add service to container
 builder.Services.AddScoped<IOrderService, OrderService>();
@@ -33,6 +34,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IDeliveryService, DeliveryService>();
 builder.Services.AddSingleton<IEmailQueue, EmailQueue>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 //Register quartz
 builder.Services.AddQuartz(q =>

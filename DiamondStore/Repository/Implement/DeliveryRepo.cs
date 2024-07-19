@@ -1,7 +1,11 @@
 ﻿using BussinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Repository.Implement
 {
@@ -24,9 +28,14 @@ namespace Repository.Implement
 
         public async Task DeleteAsync(string id)
         {
+            if (!Guid.TryParse(id, out Guid guid))
+            {
+                throw new FormatException("Invalid GUID format.");
+            }
+
             using (var _context = new DiamondStoreContext())
             {
-                var entity = await _context.Deliveries.FindAsync(id);
+                var entity = await _context.Deliveries.FindAsync(guid);
                 if (entity != null)
                 {
                     _context.Deliveries.Remove(entity);
@@ -58,9 +67,14 @@ namespace Repository.Implement
 
         public async Task<Delivery> GetByIdAsync(string id)
         {
+            if (!Guid.TryParse(id, out Guid guid))
+            {
+                throw new FormatException("Invalid GUID format.");
+            }
+
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Deliveries.FindAsync(id);
+                return await _context.Deliveries.FindAsync(guid);
             }
         }
 
