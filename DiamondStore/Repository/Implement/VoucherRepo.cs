@@ -17,17 +17,27 @@ namespace Repository.Implement
             }
         }
 
+        public Task<bool> CreateAsync(Voucher entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteAsync(string id)
         {
             using (var _context = new DiamondStoreContext())
             {
-                var entity = await _context.Set<Voucher>().FindAsync(id);
+                var entity = await _context.Set<Voucher>().FindAsync(Guid.Parse(id));
                 if (entity != null)
                 {
                     _context.Vouchers.Remove(entity);
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+        public Task<Voucher> Find(Expression<Func<Voucher, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Voucher>> FindAsync(Expression<Func<Voucher, bool>> predicate)
@@ -50,8 +60,13 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Vouchers.FindAsync(id);
+                return await _context.Vouchers.FindAsync(Guid.Parse(id));
             }
+        }
+
+        public Task<bool> Update(Voucher entity)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Voucher> UpdateAsync(Voucher entity)

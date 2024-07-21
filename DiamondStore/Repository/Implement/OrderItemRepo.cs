@@ -110,5 +110,20 @@ namespace Repository.Implement
                 throw new Exception(ex.Message);
             }
         }
+
+        public Task<OrderItem> Find(Expression<Func<OrderItem, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CreateAsync(OrderItem entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Update(OrderItem entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

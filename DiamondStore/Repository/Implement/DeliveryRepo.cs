@@ -1,7 +1,11 @@
 ﻿using BussinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Repository.Implement
 {
@@ -17,17 +21,32 @@ namespace Repository.Implement
             }
         }
 
+        public Task<bool> CreateAsync(Delivery entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteAsync(string id)
         {
+            if (!Guid.TryParse(id, out Guid guid))
+            {
+                throw new FormatException("Invalid GUID format.");
+            }
+
             using (var _context = new DiamondStoreContext())
             {
-                var entity = await _context.Deliveries.FindAsync(id);
+                var entity = await _context.Deliveries.FindAsync(guid);
                 if (entity != null)
                 {
                     _context.Deliveries.Remove(entity);
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+        public Task<Delivery> Find(Expression<Func<Delivery, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Delivery>> FindAsync(Expression<Func<Delivery, bool>> predicate)
@@ -48,10 +67,20 @@ namespace Repository.Implement
 
         public async Task<Delivery> GetByIdAsync(string id)
         {
+            if (!Guid.TryParse(id, out Guid guid))
+            {
+                throw new FormatException("Invalid GUID format.");
+            }
+
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Deliveries.FindAsync(id);
+                return await _context.Deliveries.FindAsync(guid);
             }
+        }
+
+        public Task<bool> Update(Delivery entity)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Delivery> UpdateAsync(Delivery entity)

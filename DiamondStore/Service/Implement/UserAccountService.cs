@@ -1,17 +1,25 @@
 ﻿using BussinessObject.DTO;
 using BussinessObject.Models;
+using Repository.Dtos;
 using Repository.Interface;
 using Service.Interface;
+using Service.Services.Impl;
+using System.Linq.Expressions;
 
 namespace Service.Implement
 {
     public class UserAccountService : IUserAccountService
     {
         private readonly IBaseCRUD<User> _repo;
+        private readonly IEmailQueue _emailQueue;
+        private readonly IRoleService _roleService;
 
-        public UserAccountService(IBaseCRUD<User> repo)
+
+        public UserAccountService(IBaseCRUD<User> repo, IEmailQueue emailQueue, IRoleService roleService)
         {
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+            _emailQueue = emailQueue;
+            _roleService = roleService;
         }
 
         public async Task<List<User>> GetAllAsync()
@@ -130,6 +138,57 @@ namespace Service.Implement
             return userDTO;
         }
 
-        
+        public async Task<User?> Login(string email, string password)
+        {
+            var user = await _repo.Find(c => c.Email.Equals(email));
+
+            if (user == null) return null;
+
+            if (!user.Status.Equals("Active")) return null;
+
+            var isMatch = user.Password?.Equals(password) ?? false;
+
+            if (isMatch == false) return null;
+
+            return user;
+        }
+
+        public async Task<bool> Register(RegisterDto dto)   
+        {
+            var existUser = await _repo.Find(c => c.Email.Equals(dto.email));
+            //var role = await _repo.Find(r => r.RoleName.Equals("Customer"));
+            var role = await _roleService.GetRoleByName("Customer");
+
+            if (existUser != null) return false;
+
+            var newUser = new User
+            {
+                Username = dto.username,
+                Email = dto.email,
+                Password = dto.password,
+                Status = "Verifying",
+                RoleId = role.RoleId
+            };
+
+            var result = await _repo.CreateAsync(newUser);
+
+            if (result)
+            {
+                await _emailQueue.EnqueueEmailAsync(newUser.Email);
+            }
+
+            return result;
+        }
+
+        public async Task<User?> GetUser(Expression<Func<User, bool>> predicate)
+        {
+            return await _repo.Find(predicate);
+        }
+
+        public async Task<bool> UpdateUser(User user)
+        {
+            var result = await _repo.Update(user);
+            return result;
+        }
     }
 }
