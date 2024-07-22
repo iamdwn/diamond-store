@@ -14,27 +14,30 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Delivery.DeliveryId" />
-           @*  <input type="hidden" asp-for="Delivery.Id"/>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Delivery.Id" class="control-label"></label>
-                <input asp-for="Delivery.Id" class="form-control" />
+                <input asp-for="Delivery.Id" class="form-control"  readonly/>
                 <span asp-validation-for="Delivery.Id" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <label asp-for="Delivery.OrderId" class="control-label"></label>
-                <select asp-for="Delivery.OrderId" class="form-control" asp-items="ViewBag.OrderId"></select>
-                <span asp-validation-for="Delivery.OrderId" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <label asp-for="Delivery.ShiperId" class="control-label"></label>
                 <select asp-for="Delivery.ShiperId" class="form-control" asp-items="ViewBag.ShiperId"></select>
                 <span asp-validation-for="Delivery.ShiperId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Delivery.ManagerId" class="control-label"></label>
-                <select asp-for="Delivery.ManagerId" class="form-control" asp-items="ViewBag.ManagerId"></select>
-                <span asp-validation-for="Delivery.ManagerId" class="text-danger"></span>
-            </div>
+            </div> *@
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Delivery.Id)
+        </dt>
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Delivery.Id)
+        </dd>
+
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Delivery.Shiper)
+        </dt>
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Delivery.Shiper.Email)
+        </dd>
             <div class="form-group">
                 <label asp-for="Delivery.Status" class="control-label"></label>
                 <input asp-for="Delivery.Status" class="form-control" />

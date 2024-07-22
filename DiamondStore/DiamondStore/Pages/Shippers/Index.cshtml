@@ -1,0 +1,60 @@
+﻿@page
+@model DiamondStore.Pages.DeliveryManagepage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Manager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Shiper)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Delivery) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manager.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shiper.Email)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.DeliveryId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.DeliveryId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.DeliveryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

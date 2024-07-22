@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Service.Interface;
 
-namespace DiamondStore.Pages.DeliveryManagepage
+namespace DiamondStore.Pages.Shippers
 {
     public class DetailsModel : PageModel
     {

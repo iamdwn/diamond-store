@@ -13,7 +13,7 @@ namespace Repository.Interface
 
         Task<List<User>> GetShipperList();
 
-
+        Task<IEnumerable<Delivery>> GetAllAsyncShipper(Guid shipperId);
 
         Task<List<Order>> GetOrderList();
        

@@ -1,4 +1,5 @@
 ﻿using BussinessObject.Models;
+using Repository.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace Service.Interface
         Task DeleteAsync(string id);
         Task<List<User>> GetManagerList();
         Task<List<User>> GetShipperList();
-
+        Task<Delivery> UpdateStatus(UpdateStatusByShippersDTO entity);
         Task<List<Order>> GetOrderList();
+        Task<IEnumerable<Delivery>> GetAllAsyncShipper(Guid shipperId);
     }
 }

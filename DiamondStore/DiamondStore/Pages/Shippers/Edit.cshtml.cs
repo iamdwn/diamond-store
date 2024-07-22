@@ -10,7 +10,7 @@ using BussinessObject.Models;
 using Service.Interface;
 using Service.Implement;
 
-namespace DiamondStore.Pages.DeliveryManagepage
+namespace DiamondStore.Pages.Shippers
 {
     public class EditModel : PageModel
     {
@@ -46,8 +46,6 @@ namespace DiamondStore.Pages.DeliveryManagepage
             ViewData["ManagerId"] = new SelectList(manager, "UserId", "Email");
            ViewData["OrderId"] = new SelectList(order, "OrderId", "Status");
             ViewData["ShiperId"] = new SelectList(shipper, "UserId", "Email");
-
-            Delivery = delivery;
             return Page();
         }
 
@@ -55,7 +53,10 @@ namespace DiamondStore.Pages.DeliveryManagepage
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-           
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
             //   _context.Attach(Delivery).State = EntityState.Modified;
 
