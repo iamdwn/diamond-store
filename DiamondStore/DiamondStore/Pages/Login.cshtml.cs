@@ -69,7 +69,6 @@ namespace DiamondStore.Pages
 
             // If we got this far, something failed, redisplay form
             return Page();
-            return Page();
         }
     }
 }

@@ -10,20 +10,25 @@ using Service.Interface;
 using Service.Implement;
 using BussinessObject.DTO;
 using Service;
+using System.Numerics;
 
 namespace DiamondStore.Pages.Admin
 {
-    public class IndexModel : PageModel
+    public class HistoryModel : PageModel
     {
-        private IUserAccountService _userAccountService;
+        private IDeliveryService _deliveryService;
 
-        public IndexModel(IUserAccountService userAccountService)
+        public HistoryModel(IDeliveryService deliveryService)
         {
-            _userAccountService = userAccountService;
+            _deliveryService = deliveryService;
         }
 
-        public IList<UserDTO> user { get;set; } = default!;
+        [BindProperty]
+        public IList<DeliveryResponse> revenue { get;set; } = default!;
 
+        public decimal TotalPrice { get; set; }
+        [BindProperty]
+        public DateOnly SelectedDate { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
             //Check xem nguoi dang dang nhap co phai la admin khong
@@ -38,10 +43,16 @@ namespace DiamondStore.Pages.Admin
 
             }
 
-            user = await _userAccountService.GetAllAsyncByAdmin();
+            var delivery = await _deliveryService .FindAsync(x => x.Order.OrderDate <= SelectedDate);
+
+            foreach(var item in delivery)
+            {
+            }
+
+
+
+
             return Page();
-            //User = await _context.Users
-            //    .Include(u => u.Role).ToListAsync();
 
         }
     }
