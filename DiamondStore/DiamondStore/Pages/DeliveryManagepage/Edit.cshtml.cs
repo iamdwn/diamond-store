@@ -44,7 +44,7 @@ namespace DiamondStore.Pages.DeliveryManagepage
             var order  =await _context.GetOrderList();
             var shipper= await _context.GetShipperList();
             ViewData["ManagerId"] = new SelectList(manager, "UserId", "Email");
-           ViewData["OrderId"] = new SelectList(order, "OrderId", "Status");
+           ViewData["OrderId"] = new SelectList(order, "OrderId", "Id");
             ViewData["ShiperId"] = new SelectList(shipper, "UserId", "Email");
 
             Delivery = delivery;

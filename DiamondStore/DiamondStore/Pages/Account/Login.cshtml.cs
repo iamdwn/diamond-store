@@ -75,7 +75,7 @@ namespace RazorPage.Pages.Account
 
                     //Role Shipper
                     case 2:
-                        return RedirectToPage("/Shipper/Index");
+                        return RedirectToPage("/Shippers/Index");
 
                     //Role Manager
                     case 3:

@@ -43,10 +43,10 @@ namespace DiamondStore.Pages.Warranties
 
             var products = await _productService.GetAllAsync();
             //var users = await _userService.GetAllAsync();
-
+            var customerlist = await _context.GetCustomerList();
 
             ViewData["ProductId"] = new SelectList(products, "ProductId", "Name");
-            //ViewData["UserId"] = new SelectList(users, "UserId", "Email");
+            ViewData["UserId"] = new SelectList(customerlist, "UserId", "Email");
             return Page();
         }
 

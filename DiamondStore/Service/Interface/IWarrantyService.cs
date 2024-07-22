@@ -16,5 +16,6 @@ namespace Service.Interface
         Task<Warranty> AddAsync(Warranty entity);
         Task<Warranty> UpdateAsync(Warranty entity);
         Task DeleteAsync(string id);
+        Task<List<User>> GetCustomerList();
     }
 }
