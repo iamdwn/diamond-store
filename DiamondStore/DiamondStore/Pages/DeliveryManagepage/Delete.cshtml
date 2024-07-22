@@ -1,0 +1,52 @@
+﻿@page
+@model DiamondStore.Pages.DeliveryManagepage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Delivery</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Delivery.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Delivery.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Delivery.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Delivery.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Delivery.Manager)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Delivery.Manager.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Delivery.Order)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Delivery.Order.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Delivery.Shiper)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Delivery.Shiper.Email)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Delivery.DeliveryId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
