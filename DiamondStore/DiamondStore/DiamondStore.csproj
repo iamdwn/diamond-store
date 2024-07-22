@@ -17,7 +17,10 @@
     <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
+
+
   <ItemGroup>
+    <Folder Include="Pages\Ship\" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
