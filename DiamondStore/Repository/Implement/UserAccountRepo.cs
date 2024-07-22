@@ -72,7 +72,7 @@ namespace Repository.Implement
         {
             using (var context = new DiamondStoreContext())
             {
-                return await context.Users.FirstOrDefaultAsync(predicate);
+                return await context.Users.Include(r => r.Role).FirstOrDefaultAsync(predicate);
             }
         }
 

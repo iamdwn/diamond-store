@@ -12,11 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddSession(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true; 
-});
+//builder.Services.AddSession(options =>
+//{
+//    options.Cookie.HttpOnly = true;
+//    options.Cookie.IsEssential = true; 
+//});
 
 // Add repo to container
 builder.Services.AddScoped<IBaseCRUD<Order>, OrderRepo>();
@@ -40,8 +40,12 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IDeliveryService, DeliveryService>();
 builder.Services.AddSingleton<IEmailQueue, EmailQueue>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IDeliverymanagement, Deliverymanagement>();
+
+builder.Services.AddSession();
+
 
 //Register quartz
 builder.Services.AddQuartz(q =>
