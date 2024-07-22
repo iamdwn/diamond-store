@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Ship\**" />
     <Compile Remove="Pages\Vouchers\**" />
+    <Content Remove="Pages\Ship\**" />
     <Content Remove="Pages\Vouchers\**" />
+    <EmbeddedResource Remove="Pages\Ship\**" />
     <EmbeddedResource Remove="Pages\Vouchers\**" />
+    <None Remove="Pages\Ship\**" />
     <None Remove="Pages\Vouchers\**" />
   </ItemGroup>
 
@@ -20,7 +24,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Pages\Ship\" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />

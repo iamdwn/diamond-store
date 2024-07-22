@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interface;
 
-namespace RazorPage.Pages.Account
+namespace DiamondStore.Pages
 {
     public class ActiveModel : PageModel
     {

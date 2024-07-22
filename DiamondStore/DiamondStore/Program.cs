@@ -86,5 +86,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapFallbackToPage("/Account/Login");
 
 app.Run();

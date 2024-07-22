@@ -22,6 +22,11 @@ namespace Repository.Implement
             }
         }
 
+        public Task<bool> CreateAsync(Warranty entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteAsync(string id)
         {
             using (var _context = new DiamondStoreContext())
@@ -33,6 +38,11 @@ namespace Repository.Implement
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+        public Task<Warranty> Find(Expression<Func<Warranty, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Warranty>> FindAsync(Expression<Func<Warranty, bool>> predicate)
@@ -67,6 +77,11 @@ namespace Repository.Implement
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public Task<bool> Update(Warranty entity)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Warranty> UpdateAsync(Warranty entity)

@@ -5,7 +5,7 @@ using Service.Dtos;
 using Service.Interface;
 using System.ComponentModel.DataAnnotations;
 
-namespace RazorPage.Pages.Account
+namespace DiamondStore.Pages
 {
     public class LoginModel : PageModel
     {
@@ -50,7 +50,7 @@ namespace RazorPage.Pages.Account
 
                     var user = new UserDto
                     {
-                        isAuthenticated = true, 
+                        isAuthenticated = true,
                         userId = result.UserId,
                         username = result.Username,
                     };
