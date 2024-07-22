@@ -1,0 +1,52 @@
+﻿@page
+@model DiamondStore.Pages.Warranties.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Warranty</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Warranty.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Warranty.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Warranty.IssueDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Warranty.IssueDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Warranty.ExpirationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Warranty.ExpirationDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Warranty.Product)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Warranty.Product.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Warranty.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Warranty.User.Email)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Warranty.WarrantyId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
