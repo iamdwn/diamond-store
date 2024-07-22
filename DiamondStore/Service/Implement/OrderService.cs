@@ -86,5 +86,12 @@ namespace Service.Implement
             }           
             return await _repo.FindAsync(predicate);
         }
+
+        public async Task<List<Order>> OrderHistory()
+        {
+            var orders = (await _repo.GetAllAsync()).ToList();
+            orders.RemoveAt(orders.Count - 1);
+            return orders;
+        }
     }
 }
