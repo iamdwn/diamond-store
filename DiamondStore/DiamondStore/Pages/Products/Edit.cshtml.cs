@@ -36,7 +36,6 @@ namespace DiamondStore.Pages.Products
                 return NotFound();
             }
             Product = product;
-            //ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
             return Page();
         }
 
@@ -44,33 +43,9 @@ namespace DiamondStore.Pages.Products
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-
-            //_context.Attach(Product).State = EntityState.Modified;
-
-            try
-            {
-                await _productService.DeleteAsync(Product.ProductId.ToString());
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (await ProductExists(Product.ProductId.ToString()))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _productService.UpdateAsync(Product);
 
             return RedirectToPage("./Index");
-        }
-
-        private async Task<bool> ProductExists(string id)
-        {
-            var result = await _productService.GetByIdAsync(id);
-
-            return result == null;
         }
     }
 }
