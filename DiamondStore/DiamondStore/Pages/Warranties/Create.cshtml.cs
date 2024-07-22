@@ -7,22 +7,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BussinessObject.Models;
 using Service.Interface;
+using Repository.Interface;
+using Repository.Implement;
+using Service.Implement;
 
 namespace DiamondStore.Pages.Warranties
 {
     public class CreateModel : PageModel
     {
         private readonly IWarrantyService _context;
+        private readonly IProductService _productService;
 
-        public CreateModel(IWarrantyService context)
+        public CreateModel(IWarrantyService context, IProductService productService)
         {
             _context = context;
+            _productService = productService;
         }
 
         public async Task<IActionResult>  OnGet()
         {
-            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name");
-            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
+            var customerlist =  await _context.GetCustomerList();
+            var products = await _productService.GetAllAsync();
+            ViewData["ProductId"] = new SelectList(products, "ProductId", "Name");
+            ViewData["UserId"] = new SelectList(customerlist, "UserId", "Email");
             return Page();
         }
 

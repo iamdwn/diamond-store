@@ -29,7 +29,7 @@ builder.Services.AddScoped<IBaseCRUD<Delivery>, DeliveryRepo>();
 builder.Services.AddScoped<IBaseCRUD<Product>, ProductRepo>();
 builder.Services.AddScoped<IBaseCRUD<Delivery>, DeliverymanagementRepo>();
 builder.Services.AddScoped<IDeliverManagementRepo, DeliverymanagementRepo>();
-
+builder.Services.AddScoped<IWarrantyRepo, WarrantyRepo>();
 // Add service to container
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
@@ -43,6 +43,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IDeliverymanagement, Deliverymanagement>();
+
 
 builder.Services.AddSession();
 

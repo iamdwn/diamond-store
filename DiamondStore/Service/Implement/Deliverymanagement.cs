@@ -1,4 +1,5 @@
 ﻿using BussinessObject.Models;
+using Repository.Dtos;
 using Repository.Interface;
 using Service.Interface;
 using System;
@@ -42,6 +43,11 @@ namespace Service.Implement
             return await _repo.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Delivery>> GetAllAsyncShipper(Guid shipperId)
+        {
+            return  await _repoDeliver.GetAllAsyncShipper(shipperId);
+        }
+
         public  async Task<Delivery> GetByIdAsync(string id)
         {
             return await _repo.GetByIdAsync(id);
@@ -65,6 +71,13 @@ namespace Service.Implement
         public async Task<Delivery> UpdateAsync(Delivery entity)
         {
             return await _repo.UpdateAsync(entity);
+        }
+
+        public async Task<Delivery> UpdateStatus(UpdateStatusByShippersDTO entity)
+        {
+         var delivery =   await GetByIdAsync(entity.DeliveryId.ToString());
+            delivery.Status = entity.Status;
+            return await _repo.UpdateAsync(delivery);
         }
     }
 }

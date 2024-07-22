@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Implement
 {
-    internal class ShipperSerice
+    public class ShipperService
     {
     }
 }

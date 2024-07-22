@@ -6,14 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
+using Repository.Interface;
+using Service.Interface;
 
 namespace DiamondStore.Pages.Warranties
 {
     public class DeleteModel : PageModel
     {
-        private readonly BussinessObject.Models.DiamondStoreContext _context;
+        private readonly IWarrantyService _context;
 
-        public DeleteModel(BussinessObject.Models.DiamondStoreContext context)
+        public DeleteModel(IWarrantyService context)
         {
             _context = context;
         }
@@ -28,7 +30,7 @@ namespace DiamondStore.Pages.Warranties
                 return NotFound();
             }
 
-            var warranty = await _context.Warranties.FirstOrDefaultAsync(m => m.WarrantyId == id);
+            var warranty = await _context.GetByIdAsync( id.ToString());
 
             if (warranty == null)
             {
@@ -48,12 +50,12 @@ namespace DiamondStore.Pages.Warranties
                 return NotFound();
             }
 
-            var warranty = await _context.Warranties.FindAsync(id);
+            var warranty = await _context.GetByIdAsync(id.ToString());
             if (warranty != null)
             {
                 Warranty = warranty;
-                _context.Warranties.Remove(Warranty);
-                await _context.SaveChangesAsync();
+               await _context.DeleteAsync(id.ToString());
+                ;
             }
 
             return RedirectToPage("./Index");

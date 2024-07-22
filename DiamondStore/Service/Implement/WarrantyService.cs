@@ -13,10 +13,11 @@ namespace Service.Implement
     public class WarrantyService:IWarrantyService
     {
         private readonly IBaseCRUD<Warranty> _repo;
-
-        public WarrantyService(IBaseCRUD<Warranty> repo)
+        private readonly IWarrantyRepo _warrantyRepo;
+        public WarrantyService(IBaseCRUD<Warranty> repo, IWarrantyRepo warrantyRepo)
         {
             _repo = repo;
+            _warrantyRepo = warrantyRepo;
         }
 
         public async Task<Warranty> AddAsync(Warranty entity)
@@ -42,6 +43,11 @@ namespace Service.Implement
         public async Task<Warranty> GetByIdAsync(string id)
         {
             return await _repo.GetByIdAsync(id);
+        }
+
+        public async Task<List<User>> GetCustomerList()
+        {
+           return await _warrantyRepo.GetCustomerList();
         }
 
         public async Task<Warranty> UpdateAsync(Warranty entity)
