@@ -1,21 +1,28 @@
 ﻿@using Service.Dtos
 @using Service
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+
 @{
     string currentPageUrl = Context.Request.Path;
 
-    // Check if user is authenticated
-    bool isAuthenticated = User.Identity.IsAuthenticated;
-
     // Define navigation links
-    ViewData["NavLinks"] = new[]
+    var navLinks = new List<dynamic>
     {
         new { Href = "/Index", IconClass = "fas fa-tachometer-alt", Children = "Home" },
         new { Href = "/Privacy", IconClass = "fas fa-bullhorn", Children = "Privacy" },
         new { Href = "/Orders", IconClass = "fas fa-school", Children = "Orders" },
-        new { Href = "/OrderItems", IconClass = "fas fa-file-alt", Children = "Order Items" },
-        new { Href = "/Admin", IconClass = "fas fa-user", Children = "Customer Management" },
-        new { Href = "/DeliveryPage", IconClass = "fas fa-user", Children = "Delivery Management" }
+        new { Href = "/OrderItems", IconClass = "fas fa-file-alt", Children = "Order Items" }
     };
+
+    // Add role-based links
+    if (User.IsInRole("Admin"))
+    {
+        navLinks.Add(new { Href = "/Admin", IconClass = "fas fa-user", Children = "Customer Management" });
+        navLinks.Add(new { Href = "/DeliveryPage", IconClass = "fas fa-truck", Children = "Delivery Management" });
+    }
+
+    ViewData["NavLinks"] = navLinks;
 }
 
 <div class="flex w-full flex-col overflow-hidden rounded-lg bg-white text-gray-600 md:w-64">
@@ -50,7 +57,7 @@
                 <a href="/Account/Logout" class="mx-4 my-2 flex w-fit cursor-pointer items-center gap-2 rounded-xl bg-white p-4 font-medium transition-colors duration-300 hover:bg-gray-100 md:w-auto md:flex-none md:justify-start">
                     <i class="fas fa-sign-out-alt text-md"></i>
                     <span class="hidden md:block">
-                            <text>@user.username</text>
+                        <text>@user.username</text>
                     </span>
                     <span class="hidden md:block">Sign Out</span>
                 </a>
@@ -64,9 +71,9 @@
                 <a href="@link.Href" class="mx-4 my-2 flex items-center rounded-xl p-4 text-sm font-medium transition-colors duration-300 hover:bg-gray-200 @if (currentPageUrl.StartsWith(link.Href)) {
                     <text>bg-blue-500 font-bold text-white hover:bg-blue-600 before:absolute before:left-0 before:w-[5px] before:h-8 before:bg-blue-500 before:rounded-r-lg</text>
                  }">
-                        <i class="@link.IconClass text-md mr-4"></i>
+                            <i class="@link.IconClass text-md mr-4"></i>
                     @link.Children
-                    </a>
+                        </a>
             }
         </div>
     </div>
