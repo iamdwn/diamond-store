@@ -67,6 +67,8 @@ namespace RazorPage.Pages.Account
                 HttpContext.Session.SetObjectAsJson("User", user);
                 HttpContext.Session.SetString("IsAuthenticated", "true");
 
+                HttpContext.Session.SetString("UserId", user.userId.ToString());
+
                 switch (result.Role.Id)
                 {
                     //Role Customer

@@ -11,6 +11,6 @@ namespace Service.Interface
         Task UpdateAsync(Order entity);
         Task DeleteAsync(string id);
         Task<IEnumerable<Order>> FindAsync(Expression<Func<Order, bool>> predicate);
-        Task<List<Order>> OrderHistory();
+        Task<List<Order>> OrderHistory(string userId);
     }
 }
