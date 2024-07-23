@@ -1,15 +1,29 @@
-﻿@* Views/Shared/_Toast.cshtml *@
-<div class="toast-container">
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="mr-auto">Notification</strong>
-            <small class="text-muted">just now</small>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="toast-body">
-            @ViewData["ToastMessage"]
-        </div>
-    </div>
-</div>
+﻿@if (TempData["toast-error"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script type="text/javascript">
+        var notyf = new Notyf({
+            duration: 3000,
+            position: {
+                x: 'center',
+                y: 'top',
+            },
+        });
+        notyf.error('@TempData["toast-error"]');
+    </script>
+}
+
+@if (TempData["toast-success"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script type="text/javascript">
+        var notyf = new Notyf({
+            duration: 3000,
+            position: {
+                x: 'center',
+                y: 'top',
+            },
+        });
+        notyf.success('@TempData["toast-success"]');
+    </script>
+}

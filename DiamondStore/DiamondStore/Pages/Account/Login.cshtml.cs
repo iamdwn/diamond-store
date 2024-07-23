@@ -17,24 +17,24 @@ namespace RazorPage.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel? Input { get; set; }
 
         public class InputModel
         {
             [Required]
             [EmailAddress]
-            public string Email { get; set; }
+            public string? Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
-            public string Password { get; set; }
+            public string? Password { get; set; }
         }
 
         public void OnGet()
         {
             if (HttpContext.Session.GetString("UserRole") != null)
             {
-                var role = int.Parse(HttpContext.Session.GetString("UserRole"));
+                var role = HttpContext.Session.GetInt32("UserRole");
                 if (role == 3 || role == 4)
                 {
                     Response.Redirect("Admin/Index");
@@ -49,8 +49,8 @@ namespace RazorPage.Pages.Account
             {
                 if (!result.Status.Equals("Active"))
                 {
-                    //TempData["toast-error"] = "Verify gmail not yet!";
-                    ModelState.AddModelError("Error", "Verify gmail not yet!");
+                    TempData["toast-error"] = "Verify gmail not yet!";
+                    //ModelState.AddModelError("Error", "Verify gmail not yet!");
                     return Page();
                 }
 
@@ -63,7 +63,7 @@ namespace RazorPage.Pages.Account
                     username = result.Username,
                 };
 
-                HttpContext.Session.SetString("UserRole", result.Role.RoleName);
+                HttpContext.Session.SetInt32("UserRole", result.Role.Id);
                 HttpContext.Session.SetObjectAsJson("User", user);
                 HttpContext.Session.SetString("IsAuthenticated", "true");
 
@@ -98,7 +98,8 @@ namespace RazorPage.Pages.Account
             }
             else
             {
-                ModelState.AddModelError("Error", "Invalid email or password!");
+                TempData["toast-error"] = ("Invalid email or password!");
+                //ModelState.AddModelError("Error", "Invalid email or password!");
                 return Page();
             }
         }
