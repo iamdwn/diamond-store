@@ -13,7 +13,7 @@ namespace Service.Implement
         public ProductService(IProductRepo repo)
         {
             _repo = repo;
-            _productRepo = productRepo;
+       
         }
 
         public async Task<Product> AddAsync(Product entity)

@@ -98,12 +98,6 @@ namespace Repository.Implement
             }
         }
 
-        public async Task<IEnumerable<Category>> GetListCategory()
-        {
-            using (var _context = new DiamondStoreContext())
-            {
-                return await _context.Categories.ToListAsync();
-            }
-        }
+       
     }
 }
