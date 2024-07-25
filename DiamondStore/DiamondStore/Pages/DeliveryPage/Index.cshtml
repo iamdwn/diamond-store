@@ -8,11 +8,8 @@
     <div class="flex justify-between my-4">
         <h1 class="text-3xl font-bold col-span-3">Monthly Revenue</h1>
 
-        <a asp-page="./Create">
-            <button type="button" class="btn btn-primary">
-                Create Report
-            </button>
-        </a>
+        <a class="btn btn-primary" asp-action="ExportRevenue">Export Report</a>
+
     </div>
 
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">

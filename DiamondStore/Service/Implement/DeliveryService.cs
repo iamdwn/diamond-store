@@ -1,7 +1,10 @@
 ﻿using BussinessObject.DTO;
 using BussinessObject.Models;
+using ClosedXML.Excel;
+using Microsoft.AspNetCore.Mvc;
 using Repository.Interface;
 using Service.Interface;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace Service.Implement
@@ -51,9 +54,9 @@ namespace Service.Implement
             var deliveries = await _repo.GetAllAsync();
             List<DeliveryResponse> deliveryResponses = new List<DeliveryResponse>();
 
-            foreach(var delivery in deliveries)
+            foreach (var delivery in deliveries)
             {
-                List<string> products= new List<string>();
+                List<string> products = new List<string>();
 
                 DeliveryResponse deliveryResponse = new DeliveryResponse();
                 deliveryResponse.DeliveryId = delivery.DeliveryId;
@@ -67,12 +70,12 @@ namespace Service.Implement
 
                 var order = await _order.GetByIdAsync(delivery.OrderId.ToString());
                 deliveryResponse.ProductPrice = order.TotalAmount;
-                deliveryResponse.EndPrice= order.TotalPrice;
-                deliveryResponse.OrderDate = order.OrderDate; 
+                deliveryResponse.EndPrice = order.TotalPrice;
+                deliveryResponse.OrderDate = order.OrderDate;
 
                 var orderItem = await _item.FindAsync(x => x.OrderId == order.OrderId);
 
-                foreach(var item in orderItem)
+                foreach (var item in orderItem)
                 {
                     products.Add(item.Product.Name);
                 }
@@ -91,6 +94,48 @@ namespace Service.Implement
             return await _repo.UpdateAsync(entity);
         }
 
-    
+        [HttpGet]
+        public async Task<FileResult> ExportRevenue()
+        {
+            var deliveryResponses = await GetDeliveryResponsesByAdmin();
+            var FileName = "DiamondStoreRevenue.xlsx";
+            return GenerateExcel(FileName, deliveryResponses);
+        }
+
+        private FileResult GenerateExcel(string fileName, List<DeliveryResponse> deliveryResponses)
+        {
+            DataTable dt = new DataTable("DeliveryResponse");
+            dt.Columns.AddRange(new DataColumn[]
+            {
+                new DataColumn("DeliveryId"),
+                new DataColumn("UserName"),
+                new DataColumn("Email"),
+                new DataColumn("ManagerName"),
+                new DataColumn("ProductPrice"),
+                new DataColumn("EndPrice"),
+                new DataColumn("OrderDate"),
+                new DataColumn("Product"),
+                new DataColumn("DeliveryStatus")
+            });
+
+            foreach (var item in deliveryResponses) {
+                dt.Rows.Add(item.DeliveryId, item.UserName, item.Email, item.ManagerName, item.ProductPrice, item.EndPrice, item.OrderDate, item.Product, item.DeliveryStatus);
+            }
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    FileContentResult file = new FileContentResult(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    {
+                        FileDownloadName = fileName
+                    };
+                    return file;
+                }
+            }
+        }
+
     }
 }
