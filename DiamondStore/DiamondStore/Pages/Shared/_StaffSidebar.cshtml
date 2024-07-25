@@ -17,6 +17,8 @@
         new { Href = "/DeliveryPage", IconClass = "fas fa-user", Children = "Delivery Management" },
         new { Href = "/Products", IconClass = "fas fa-user", Children = "Product Management" }
     };
+
+
 }
 
 <div class="flex w-full flex-col overflow-hidden rounded-lg bg-white text-gray-600 md:w-64">
@@ -29,18 +31,28 @@
     <div class="my-2 flex flex-1 flex-col justify-between rounded-lg transition-colors duration-300 md:my-4">
         @{
             var user = Context.Session.GetObjectFromJson<UserDto>("User");
+            var role = Context.Session.GetInt32("UserRole");
         }
 
         <!-- Navigation Links -->
         <div class="hidden md:block">
+            @if (role == 4)
+            {
+                ViewData["NavLinks"] = new[]
+                {
+            new { Href = "/Admin", IconClass = "fas fa-user", Children = "Customer Management" },
+            new { Href = "/DeliveryPage", IconClass = "fas fa-user", Children = "Delivery Management" }
+            };
+
+            }
             @foreach (var link in (IEnumerable<dynamic>)ViewData["NavLinks"])
             {
                 <a href="@link.Href" class="mx-4 my-2 flex items-center rounded-xl p-4 text-sm font-medium transition-colors duration-300 hover:bg-gray-200 @if (currentPageUrl.StartsWith(link.Href)) {
                     <text>bg-blue-500 font-bold text-white hover:bg-blue-600 before:absolute before:left-0 before:w-[5px] before:h-8 before:bg-blue-500 before:rounded-r-lg</text>
                  }">
-                        <i class="@link.IconClass text-md mr-4"></i>
+                            <i class="@link.IconClass text-md mr-4"></i>
                     @link.Children
-                    </a>
+                        </a>
             }
         </div>
 
@@ -61,7 +73,7 @@
             else
             {
                 <!-- Show Logout link -->
-                
+
                 <a href="/Logout" class="mx-4 my-2 flex w-fit cursor-pointer items-center gap-2 rounded-xl bg-white p-4 font-medium transition-colors duration-300 hover:bg-gray-100 md:w-auto md:flex-none md:justify-start">
                     <i class="fas fa-sign-out-alt text-md"></i>
                     <span class="hidden md:block">
@@ -72,6 +84,6 @@
             }
         </div>
 
-        
+
     </div>
 </div>
