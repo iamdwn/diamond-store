@@ -42,4 +42,11 @@
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.11.0" />
   </ItemGroup>
 
+
+
+  <ItemGroup>
+    <Folder Include="Pages\Customers\Addproduct\" />
+    <Folder Include="Pages\Shippers\NewFolder\" />
+  </ItemGroup>
+
 </Project>

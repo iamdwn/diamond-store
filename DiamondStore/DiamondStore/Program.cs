@@ -28,7 +28,6 @@ builder.Services.AddScoped<IBaseCRUD<Delivery>, DeliveryRepo>();
 builder.Services.AddScoped<IDeliverManagementRepo, DeliverymanagementRepo>();
 builder.Services.AddScoped<IWarrantyRepo, WarrantyRepo>();
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
-
 // Add service to container
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
