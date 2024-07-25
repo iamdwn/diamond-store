@@ -1,4 +1,5 @@
 using BussinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using Quartz;
 using Repository.Implement;
 using Repository.Interface;
@@ -11,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<DiamondStoreContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+});
+
 builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
