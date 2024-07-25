@@ -1,0 +1,58 @@
+﻿@page
+@model DiamondStore.Pages.Products.IndexModel
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="container mx-auto mt-8">
+    <h1 class="text-2xl font-bold mb-4">Products</h1>
+    <div class="mb-4">
+        <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" asp-page="Create">Create New</a>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Id)</th>
+                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Name)</th>
+                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Description)</th>
+                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Price)</th>
+                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].IsExpired)</th>
+                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Category.Carat)</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var userRole = HttpContext.Session.GetInt32("UserRole");
+                }
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Price)</td>
+                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.IsExpired)</td>
+                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Category.Carat)</td>
+                        <td class="py-2 px-4 border-b">
+                            @if (userRole == 4)
+                            {
+                                <a class="text-blue-500 hover:text-blue-700" asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a>
+                                <span class="mx-2">|</span>
+                                <a class="text-red-500 hover:text-red-700" asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                                <span class="mx-2">|</span>
+                            }
+                            <a class="text-green-500 hover:text-green-700" asp-page="./Details" asp-route-id="@item.ProductId">Details</a>
+                            <span class="mx-2">|</span>
+                            <form method="post" asp-page-handler="AddToCart" asp-route-id="@item.ProductId" class="inline">
+                                <button type="submit" class="text-yellow-500 hover:text-yellow-700">Add to Cart</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

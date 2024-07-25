@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace RazorPage.Pages.Account
+namespace DiamondStore.Pages
 {
     public class LogoutModel : PageModel
     {
@@ -11,7 +11,7 @@ namespace RazorPage.Pages.Account
             HttpContext.Session.Clear();
 
             // Redirect to login page or another appropriate page
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Login");
         }
     }
 }

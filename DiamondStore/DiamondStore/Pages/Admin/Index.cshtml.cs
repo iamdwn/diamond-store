@@ -9,6 +9,7 @@ using BussinessObject.Models;
 using Service.Interface;
 using Service.Implement;
 using BussinessObject.DTO;
+using Service;
 
 namespace DiamondStore.Pages.Admin
 {
@@ -21,21 +22,20 @@ namespace DiamondStore.Pages.Admin
             _userAccountService = userAccountService;
         }
 
-        public IList<UserDTO> user { get;set; } = default!;
+        public IList<UserDTO> user { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             //Check xem nguoi dang dang nhap co phai la admin khong
-            //if (HttpContext.Session.GetString("Role") != "Admin")
-            //{
-            //    Response.Redirect("/Login");
-            //}
+            var UserRole = HttpContext.Session.GetInt32("UserRole");
+            if (UserRole != 4)
+            {
+                return Redirect("../Login");
+            }
 
             user = await _userAccountService.GetAllAsyncByAdmin();
-
-            //User = await _context.Users
-            //    .Include(u => u.Role).ToListAsync();
-
+            return Page();
+         
         }
     }
 }

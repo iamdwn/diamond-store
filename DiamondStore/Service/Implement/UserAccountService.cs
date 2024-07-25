@@ -156,7 +156,7 @@ namespace Service.Implement
         public async Task<bool> Register(RegisterDto dto)   
         {
             var existUser = await _repo.Find(c => c.Email.Equals(dto.email));
-            //var role = await _repo.Find(r => r.RoleName.Equals("Customer"));
+            //var role = await _itemRepo.Find(r => r.RoleName.Equals("Customer"));
             var role = await _roleService.GetRoleByName("Customer");
 
             if (existUser != null) return false;

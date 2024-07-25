@@ -6,7 +6,7 @@ using Service.Dtos;
 using Service.Interface;
 using System.ComponentModel.DataAnnotations;
 
-namespace RazorPage.Pages.Account
+namespace DiamondStore.Pages
 {
     public class LoginModel : PageModel
     {
@@ -37,7 +37,7 @@ namespace RazorPage.Pages.Account
                 var role = HttpContext.Session.GetInt32("UserRole");
                 if (role == 3 || role == 4)
                 {
-                    Response.Redirect("Admin/Index");
+                    Response.Redirect("/Admin/Index");
                 }
             }
         }
@@ -67,6 +67,8 @@ namespace RazorPage.Pages.Account
                 HttpContext.Session.SetObjectAsJson("User", user);
                 HttpContext.Session.SetString("IsAuthenticated", "true");
 
+                HttpContext.Session.SetString("UserId", user.userId.ToString());
+
                 switch (result.Role.Id)
                 {
                     //Role Customer
@@ -75,7 +77,7 @@ namespace RazorPage.Pages.Account
 
                     //Role Shipper
                     case 2:
-                        return RedirectToPage("/Shipper/Index");
+                        return RedirectToPage("/Shippers/Index");
 
                     //Role Manager
                     case 3:

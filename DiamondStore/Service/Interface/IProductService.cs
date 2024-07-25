@@ -11,5 +11,6 @@ namespace Service.Interface
         Task<Product> AddAsync(Product entity);
         Task<Product> UpdateAsync(Product entity);
         Task DeleteAsync(string id);
+        Task<IEnumerable<Category>> GetListCategory();
     }
 }

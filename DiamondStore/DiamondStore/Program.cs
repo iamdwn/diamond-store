@@ -11,36 +11,40 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
-//builder.Services.AddSession(options =>
-//{
-//    options.Cookie.HttpOnly = true;
-//    options.Cookie.IsEssential = true; 
-//});
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // Add repo to container
 builder.Services.AddScoped<IBaseCRUD<Order>, OrderRepo>();
 builder.Services.AddScoped<IBaseCRUD<OrderItem>, OrderItemRepo>();
 builder.Services.AddScoped<IBaseCRUD<User>, UserAccountRepo>();
+builder.Services.AddScoped<IBaseCRUD<Warranty>, WarrantyRepo>();
+builder.Services.AddScoped<IBaseCRUD<Product>, ProductRepo>();
 builder.Services.AddScoped<IBaseCRUD<Role>, RoleRepo>();
 builder.Services.AddScoped<IBaseCRUD<Delivery>, DeliveryRepo>();
-
+builder.Services.AddScoped<IDeliverManagementRepo, DeliverymanagementRepo>();
+builder.Services.AddScoped<IWarrantyRepo, WarrantyRepo>();
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
 // Add service to container
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
+builder.Services.AddScoped<IWarrantyService, WarrantyService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IDeliveryService, DeliveryService>();
 builder.Services.AddSingleton<IEmailQueue, EmailQueue>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddSession();
+builder.Services.AddScoped<IDeliverymanagement, Deliverymanagement>();
 
-//Register quartz
+// Register Quartz
 builder.Services.AddQuartz(q =>
 {
     q.UseMicrosoftDependencyInjectionJobFactory();
 
-    // Configure SendEmailJob
     var emailJobKey = new JobKey("SendEmailJob");
     q.AddJob<SendEmailJob>(opts => opts.WithIdentity(emailJobKey));
 
@@ -54,7 +58,6 @@ builder.Services.AddQuartz(q =>
         .ForJob(emailJobKey)
         .WithIdentity("SendEmailJob-trigger")
         .WithCronSchedule(emailCronSchedule));
-
 });
 
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
@@ -65,21 +68,17 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseSession();
-
 app.UseRouting();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapFallbackToPage("/Login");
 
 app.Run();

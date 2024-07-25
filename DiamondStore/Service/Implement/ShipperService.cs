@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BussinessObject.DTO
+namespace Service.Implement
 {
-    public class RevenueResponse
+    public class ShipperService
     {
-
     }
 }

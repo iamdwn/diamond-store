@@ -10,13 +10,9 @@ namespace BussinessObject.DTO
     public class DeliveryResponse
     {
         public Guid DeliveryId { get; set; }
-
-        [JsonIgnore]
-        public Guid? OrderId { get; set; }
-        [JsonIgnore]
-        public Guid? ShiperId { get; set; }
-        [JsonIgnore]
-        public Guid? ManagerId { get; set; }
+        public Guid OrderId { get; set; }
+        public Guid ShiperId { get; set; }
+        public Guid ManagerId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public List<string> Product { get; set; }

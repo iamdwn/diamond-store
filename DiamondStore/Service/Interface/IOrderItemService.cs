@@ -11,5 +11,6 @@ namespace Service.Interface
         Task UpdateAsync(OrderItem entity);
         Task DeleteAsync(string id);
         Task<IEnumerable<OrderItem>> FindAsync(Expression<Func<OrderItem, bool>> predicate);
+        Task AddProductToOrder(string userId, string productId);
     }
 }
