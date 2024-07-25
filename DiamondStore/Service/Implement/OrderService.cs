@@ -83,7 +83,7 @@ namespace Service.Implement
             if (predicate == null)
             {
                 throw new ArgumentException("Predicate is null");
-            }           
+            }
             return await _repo.FindAsync(predicate);
         }
 
@@ -92,6 +92,15 @@ namespace Service.Implement
             var orders = (await _repo.FindAsync(x => x.UserId == Guid.Parse(userId))).ToList();
             orders.RemoveAt(orders.Count - 1);
             return orders;
+        }
+
+        public async Task ComfirmOrder(string userId)
+        {
+            var orderList = (await _repo.FindAsync(x => x.UserId == Guid.Parse(userId))).ToList();
+            var lastestOrder = orderList[orderList.Count - 1];
+            lastestOrder.Status = "Delivery";
+            await _repo.UpdateAsync(lastestOrder);
+            await _repo.AddAsync(new Order());
         }
     }
 }

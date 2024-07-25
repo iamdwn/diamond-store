@@ -12,5 +12,6 @@ namespace Service.Interface
         Task DeleteAsync(string id);
         Task<IEnumerable<Order>> FindAsync(Expression<Func<Order, bool>> predicate);
         Task<List<Order>> OrderHistory(string userId);
+        Task ComfirmOrder(string userId);
     }
 }
