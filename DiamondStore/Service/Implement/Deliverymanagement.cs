@@ -13,15 +13,15 @@ namespace Service.Implement
 {
     public class Deliverymanagement : IDeliverymanagement
     {
-        private readonly IBaseCRUD<Delivery> _repo;
-        private readonly IDeliverManagementRepo _repoDeliver;
+        private readonly IDeliverManagementRepo _repo;
+        
 
  
 
-        public Deliverymanagement(IBaseCRUD<Delivery> repo, IDeliverManagementRepo repoDeliver)
+        public Deliverymanagement(IDeliverManagementRepo repo)
         {
             _repo = repo;
-            _repoDeliver = repoDeliver;
+           
         }
         public async Task<Delivery> AddAsync(Delivery entity)
         {
@@ -45,7 +45,7 @@ namespace Service.Implement
 
         public async Task<IEnumerable<Delivery>> GetAllAsyncShipper(Guid shipperId)
         {
-            return  await _repoDeliver.GetAllAsyncShipper(shipperId);
+            return  await _repo.GetAllAsyncShipper(shipperId);
         }
 
         public  async Task<Delivery> GetByIdAsync(string id)
@@ -55,17 +55,17 @@ namespace Service.Implement
 
         public async Task<List<User>> GetManagerList()
         {
-            return await _repoDeliver.GetManagerList();
+            return await _repo.GetManagerList();
         }
 
         public async Task<List<Order>> GetOrderList()
         {
-            return await _repoDeliver.GetOrderList();
+            return await _repo.GetOrderList();
         }
 
         public async Task<List<User>> GetShipperList()
         {
-            return await _repoDeliver.GetShipperList();
+            return await _repo.GetShipperList();
         }
 
         public async Task<Delivery> UpdateAsync(Delivery entity)
