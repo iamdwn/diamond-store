@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Service.Interface;
 using Service.Implement;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace DiamondStore.Pages.DeliveryManagepage
 {
@@ -41,10 +42,10 @@ namespace DiamondStore.Pages.DeliveryManagepage
             }
             Delivery = delivery;
             var manager = await _context.GetManagerList();
-            var order  =await _context.GetOrderList();
-            var shipper= await _context.GetShipperList();
+            var order = await _context.GetOrderList();
+            var shipper = await _context.GetShipperList();
             ViewData["ManagerId"] = new SelectList(manager, "UserId", "Email");
-           ViewData["OrderId"] = new SelectList(order, "OrderId", "Id");
+            ViewData["OrderId"] = new SelectList(order, "OrderId", "Id");
             ViewData["ShiperId"] = new SelectList(shipper, "UserId", "Email");
 
             Delivery = delivery;
@@ -55,25 +56,32 @@ namespace DiamondStore.Pages.DeliveryManagepage
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-           
+
 
             //   _context.Attach(Delivery).State = EntityState.Modified;
+            var role = HttpContext.Session.GetInt32("UserRole");
 
-            try
+            if (role == 2)
             {
+                Delivery.Status = "Shipped";
                 await _context.UpdateAsync(Delivery);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (await DeliveryExists(Delivery.DeliveryId))
+            else
+                try
                 {
-                    return NotFound();
+                    await _context.UpdateAsync(Delivery);
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (await DeliveryExists(Delivery.DeliveryId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
             return RedirectToPage("./Index");
         }

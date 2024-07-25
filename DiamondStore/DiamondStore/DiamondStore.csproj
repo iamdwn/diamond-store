@@ -7,12 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Customers\**" />
+    <Compile Remove="Pages\Shippers\NewFolder\**" />
     <Compile Remove="Pages\Ship\**" />
     <Compile Remove="Pages\Vouchers\**" />
+    <Content Remove="Pages\Customers\**" />
+    <Content Remove="Pages\Shippers\NewFolder\**" />
     <Content Remove="Pages\Ship\**" />
     <Content Remove="Pages\Vouchers\**" />
+    <EmbeddedResource Remove="Pages\Customers\**" />
+    <EmbeddedResource Remove="Pages\Shippers\NewFolder\**" />
     <EmbeddedResource Remove="Pages\Ship\**" />
     <EmbeddedResource Remove="Pages\Vouchers\**" />
+    <None Remove="Pages\Customers\**" />
+    <None Remove="Pages\Shippers\NewFolder\**" />
     <None Remove="Pages\Ship\**" />
     <None Remove="Pages\Vouchers\**" />
   </ItemGroup>
@@ -40,13 +48,6 @@
     <PackageReference Include="Quartz" Version="3.11.0" />
     <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.11.0" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.11.0" />
-  </ItemGroup>
-
-
-
-  <ItemGroup>
-    <Folder Include="Pages\Customers\Addproduct\" />
-    <Folder Include="Pages\Shippers\NewFolder\" />
   </ItemGroup>
 
 </Project>

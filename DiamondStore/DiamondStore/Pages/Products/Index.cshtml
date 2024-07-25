@@ -7,8 +7,14 @@
 
 <div class="container mx-auto mt-8">
     <h1 class="text-2xl font-bold mb-4">Products</h1>
+    @{
+        var userRole = HttpContext.Session.GetInt32("UserRole");
+    }
     <div class="mb-4">
-        <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" asp-page="Create">Create New</a>
+        @if (userRole == 3)
+        {
+            <a class="text-sm-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" asp-page="Create">Create New</a>
+        }
     </div>
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-200">
@@ -24,9 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                @{
-                    var userRole = HttpContext.Session.GetInt32("UserRole");
-                }
+
                 @foreach (var item in Model.Products)
                 {
                     <tr>
@@ -37,7 +41,7 @@
                         <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.IsExpired)</td>
                         <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Category.Carat)</td>
                         <td class="py-2 px-4 border-b">
-                            @if (userRole == 4)
+                            @if (userRole == 3)
                             {
                                 <a class="text-blue-500 hover:text-blue-700" asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a>
                                 <span class="mx-2">|</span>
@@ -46,9 +50,12 @@
                             }
                             <a class="text-green-500 hover:text-green-700" asp-page="./Details" asp-route-id="@item.ProductId">Details</a>
                             <span class="mx-2">|</span>
+                            @if (userRole == 1)
+                            {
                             <form method="post" asp-page-handler="AddToCart" asp-route-id="@item.ProductId" class="inline">
                                 <button type="submit" class="text-yellow-500 hover:text-yellow-700">Add to Cart</button>
                             </form>
+                            }
                         </td>
                     </tr>
                 }

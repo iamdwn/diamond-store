@@ -35,25 +35,61 @@
         }
 
         <!-- Navigation Links -->
-        <div class="hidden md:block">
+        <div class="hidden md:block" name="admin-bar">
+            @if (role == 1)
+            {
+                ViewData["NavLinks"] = new[]
+                {
+            new { Href = "/Products", IconClass = "fas fa-user", Children = "Product" },
+            new { Href = "/OrderItems", IconClass = "fas fa-user", Children = "Cart" }
+            };
+            }
+
+            @if (role == 2)
+            {
+                ViewData["NavLinks"] = new[]
+                {
+            new { Href = "/Shippers/managedelivery", IconClass = "fas fa-user", Children = "Shipper Management" }
+            };
+            }
+
+            @if (role == 3)
+            {
+                ViewData["NavLinks"] = new[]
+                {
+            new { Href = "/Products", IconClass = "fas fa-user", Children = "Product Management" },
+            new { Href = "/DeliveryManagepage", IconClass = "fas fa-user", Children = "Delivery Management" },
+            new { Href = "/Orders", IconClass = "fas fa-user", Children = "Order Management" }
+            };
+            }
+
             @if (role == 4)
             {
                 ViewData["NavLinks"] = new[]
                 {
-            new { Href = "/Admin", IconClass = "fas fa-user", Children = "Customer Management" },
-            new { Href = "/DeliveryManagePage", IconClass = "fas fa-user", Children = "Delivery Management" }
+            new { Href = "/Admin", IconClass = "fas fa-user", Children = "Account" },
+            new { Href = "/DeliveryPage", IconClass = "fas fa-user", Children = "Delivery" }
             };
-
             }
+
+            @if (role == 5)
+            {
+                ViewData["NavLinks"] = new[]
+                {
+            new { Href = "/Warranties", IconClass = "fas fa-user", Children = "Warranty Management" }
+            };
+            }
+
             @foreach (var link in (IEnumerable<dynamic>)ViewData["NavLinks"])
             {
                 <a href="@link.Href" class="mx-4 my-2 flex items-center rounded-xl p-4 text-sm font-medium transition-colors duration-300 hover:bg-gray-200 @if (currentPageUrl.StartsWith(link.Href)) {
                     <text>bg-blue-500 font-bold text-white hover:bg-blue-600 before:absolute before:left-0 before:w-[5px] before:h-8 before:bg-blue-500 before:rounded-r-lg</text>
                  }">
-                            <i class="@link.IconClass text-md mr-4"></i>
+                                                <i class="@link.IconClass text-md mr-4"></i>
                     @link.Children
-                        </a>
+                                            </a>
             }
+
         </div>
 
         <!-- Conditional Login/Register or Logout Links -->

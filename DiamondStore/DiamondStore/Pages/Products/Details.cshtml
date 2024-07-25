@@ -10,6 +10,9 @@
     <div class="bg-white shadow-md rounded-lg p-6">
         <h2 class="text-2xl font-semibold mb-4">Product</h2>
         <hr class="mb-4" />
+        @{
+            var userRole = HttpContext.Session.GetInt32("UserRole");
+        }
         <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
             <dt class="font-medium">ID</dt>
             <dd class="mb-2">@Html.DisplayFor(model => model.Product.Id)</dd>
@@ -68,7 +71,10 @@
         </dl>
     </div>
     <div class="mt-4">
-        <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" asp-page="./Edit" asp-route-id="@Model.Product.ProductId">Edit</a>
+        @if (userRole == 3)
+        {
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" asp-page="./Edit" asp-route-id="@Model.Product.ProductId">Edit</a>
+        }
         <a class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2" asp-page="./Index">Back to List</a>
     </div>
 </div>

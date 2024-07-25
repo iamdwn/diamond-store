@@ -55,26 +55,34 @@ namespace DiamondStore.Pages.Shippers.managedelivery
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                //return Page();
             }
 
             //   _context.Attach(Delivery).State = EntityState.Modified;
 
-            try
+            var role = HttpContext.Session.GetInt32("UserRole");
+
+            if (role == 2)
             {
+                Delivery.Status = "Shipped";
                 await _context.UpdateAsync(Delivery);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (await DeliveryExists(Delivery.DeliveryId))
+            else
+                try
                 {
-                    return NotFound();
+                    await _context.UpdateAsync(Delivery);
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (await DeliveryExists(Delivery.DeliveryId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
             return RedirectToPage("./Index");
         }

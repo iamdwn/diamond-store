@@ -2,6 +2,7 @@
 using BussinessObject.Models;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
 using Service.Interface;
 using System.Data;
@@ -89,9 +90,23 @@ namespace Service.Implement
             return deliveryResponses;
         }
 
-        public async Task<Delivery> UpdateAsync(Delivery entity)
+        public async Task UpdateAsync(Delivery entity)
         {
-            return await _repo.UpdateAsync(entity);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Delivery entity cannot be null.");
+            }
+
+            var item = await _repo.GetByIdAsync(entity.DeliveryId.ToString());
+
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Delivery with ID {entity.DeliveryId} not found.");
+            }
+
+            item.Status = entity.Status;
+
+            await _repo.UpdateAsync(item);
         }
 
         [HttpGet]

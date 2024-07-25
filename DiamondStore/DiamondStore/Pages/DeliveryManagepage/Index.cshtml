@@ -2,15 +2,21 @@
 @model DiamondStore.Pages.DeliveryManagepage.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Delivery";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
+    @{
+        var userRole = HttpContext.Session.GetInt32("UserRole");
+    }
+
+    @if (userRole == 3)
+    {
+        <p>
+            <a asp-page="Create">Create New</a>
+        </p>
+    }
+
     <thead>
         <tr>
             <th>
@@ -35,15 +41,34 @@
         @foreach (var item in Model.Delivery)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                <td>@Html.DisplayFor(modelItem => item.Shiper.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.Order.Id)</td>
-                <td>@Html.DisplayFor(modelItem => item.Manager.Email)</td>
+
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.DeliveryId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.DeliveryId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.DeliveryId">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manager.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shiper.Email)
+                </td>
+                <td>
+                    @if (userRole == 3)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.DeliveryId">Edit |</a>
+                        <a asp-page="./Delete" asp-route-id="@item.DeliveryId">Delete |</a>
+                    }
+
+                    @if (userRole == 2)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.DeliveryId">Confirm |</a>
+                    }
+
                 </td>
             </tr>
         }

@@ -32,14 +32,14 @@ namespace DiamondStore.Pages
 
         public void OnGet()
         {
-            if (HttpContext.Session.GetString("UserRole") != null)
-            {
-                var role = HttpContext.Session.GetInt32("UserRole");
-                if (role == 3 || role == 4)
-                {
-                    Response.Redirect("/Admin/Index");
-                }
-            }
+            //if (HttpContext.Session.GetString("UserRole") != null)
+            //{
+            //    var role = HttpContext.Session.GetInt32("UserRole");
+            //    if (role == 3 || role == 4)
+            //    {
+            //        Response.Redirect("/Admin/Index");
+            //    }
+            //}
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -73,23 +73,23 @@ namespace DiamondStore.Pages
                 {
                     //Role Customer
                     case 1:
-                        return RedirectToPage("/Index");
+                        return RedirectToPage("Products/Index");
 
                     //Role Shipper
                     case 2:
-                        return RedirectToPage("/Shippers/Index");
+                        return RedirectToPage("/Shippers/managedelivery/Index");
 
                     //Role Manager
                     case 3:
-                        return RedirectToPage("/Manager/Index");
+                        return RedirectToPage("/Products/Index");
 
                     //Role Admin
                     case 4:
                         return RedirectToPage("/Admin/Index");
 
-                    //Role Support
+                    //Role Warranties
                     case 5:
-                        return RedirectToPage("/Support/Index");
+                        return RedirectToPage("/Warranties/Index");
 
                     default:
                         return Page();

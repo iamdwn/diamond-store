@@ -11,39 +11,56 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Delivery.DeliveryId" />
-           @*  <input type="hidden" asp-for="Delivery.Id"/>
+        @{
+            var userRole = HttpContext.Session.GetInt32("UserRole");
+        }
+
+        @if (userRole == 3)
+        {
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Delivery.DeliveryId" />
+                @*  <input type="hidden" asp-for="Delivery.Id"/>
             <div class="form-group">
-                <label asp-for="Delivery.Id" class="control-label"></label>
-                <input asp-for="Delivery.Id" class="form-control" />
-                <span asp-validation-for="Delivery.Id" class="text-danger"></span>
+            <label asp-for="Delivery.Id" class="control-label"></label>
+            <input asp-for="Delivery.Id" class="form-control" />
+            <span asp-validation-for="Delivery.Id" class="text-danger"></span>
             </div> *@
-            <div class="form-group">
-                <label asp-for="Delivery.OrderId" class="control-label"></label>
-                <select asp-for="Delivery.OrderId" class="form-control" asp-items="ViewBag.OrderId"></select>
-                <span asp-validation-for="Delivery.OrderId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Delivery.ShiperId" class="control-label"></label>
-                <select asp-for="Delivery.ShiperId" class="form-control" asp-items="ViewBag.ShiperId"></select>
-                <span asp-validation-for="Delivery.ShiperId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Delivery.ManagerId" class="control-label"></label>
-                <select asp-for="Delivery.ManagerId" class="form-control" asp-items="ViewBag.ManagerId"></select>
-                <span asp-validation-for="Delivery.ManagerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Delivery.Status" class="control-label"></label>
-                <input asp-for="Delivery.Status" class="form-control" />
-                <span asp-validation-for="Delivery.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <label asp-for="Delivery.OrderId" class="control-label"></label>
+                    <select asp-for="Delivery.OrderId" class="form-control" asp-items="ViewBag.OrderId"></select>
+                    <span asp-validation-for="Delivery.OrderId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Delivery.ShiperId" class="control-label"></label>
+                    <select asp-for="Delivery.ShiperId" class="form-control" asp-items="ViewBag.ShiperId"></select>
+                    <span asp-validation-for="Delivery.ShiperId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Delivery.ManagerId" class="control-label"></label>
+                    <select asp-for="Delivery.ManagerId" class="form-control" asp-items="ViewBag.ManagerId"></select>
+                    <span asp-validation-for="Delivery.ManagerId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Delivery.Status" class="control-label"></label>
+                    <input asp-for="Delivery.Status" class="form-control" />
+                    <span asp-validation-for="Delivery.Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        } else
+        {
+            <form method="post">
+                <h2>Are you sure you want to confirm this task?</h2>
+                <div class="dialog-buttons">
+                    <button type="submit" class="btn btn-primary" value="Yes"></button>
+                    <a asp-page="./Index">No</a>
+                </div>
+            </form>
+        }
+
     </div>
 </div>
 
@@ -52,5 +69,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
