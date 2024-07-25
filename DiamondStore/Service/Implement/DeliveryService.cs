@@ -1,6 +1,7 @@
 ﻿using BussinessObject.DTO;
 using BussinessObject.Models;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
@@ -16,13 +17,15 @@ namespace Service.Implement
         private readonly IBaseCRUD<Order> _order;
         private readonly IBaseCRUD<User> _user;
         private readonly IBaseCRUD<OrderItem> _item;
+        private readonly DiamondStoreContext _context;
 
-        public DeliveryService(IBaseCRUD<Delivery> repo, IBaseCRUD<Order> order, IBaseCRUD<User> user, IBaseCRUD<OrderItem> item)
+        public DeliveryService(IBaseCRUD<Delivery> repo, IBaseCRUD<Order> order, IBaseCRUD<User> user, IBaseCRUD<OrderItem> item, DiamondStoreContext diamondStoreContext)
         {
             _repo = repo;
             _order = order;
             _user = user;
             _item = item;
+            _context = diamondStoreContext;
         }
 
         public async Task<Delivery> AddAsync(Delivery entity)
@@ -104,7 +107,11 @@ namespace Service.Implement
                 throw new KeyNotFoundException($"Delivery with ID {entity.DeliveryId} not found.");
             }
 
+            _context.Attach(item).State = EntityState.Modified;
+            item.Shiper = entity.Shiper ?? item.Shiper;
             item.Status = entity.Status;
+            item.Shiper.Email = entity.Shiper.Email ?? item.Shiper.Email;
+            item.Order = entity.Order ?? item.Order;
 
             await _repo.UpdateAsync(item);
         }
