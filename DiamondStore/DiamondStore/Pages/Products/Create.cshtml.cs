@@ -19,11 +19,12 @@ namespace DiamondStore.Pages.Products
             _productService = productService;
         }
 
-        //public IActionResult OnGet()
-        //{
-            //ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
-            //return Page();
-        //}
+        public async Task<IActionResult> OnGet()
+        {
+            var products = await _productService.GetListCategory();
+            ViewData["CategoryId"] = new SelectList(products, "Id", "Id");
+            return Page();
+        }
 
         [BindProperty]
         public Product Product { get; set; } = default!;

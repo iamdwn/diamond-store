@@ -1,4 +1,5 @@
 ﻿using BussinessObject.Models;
+using Repository.Implement;
 using Repository.Interface;
 using Service.Interface;
 using System.Linq.Expressions;
@@ -7,9 +8,9 @@ namespace Service.Implement
 {
     public class ProductService : IProductService
     {
-        private readonly IBaseCRUD<Product> _repo;
+        private readonly IProductRepo _repo;
 
-        public ProductService(IBaseCRUD<Product> repo)
+        public ProductService(IProductRepo repo)
         {
             _repo = repo;
         }
@@ -42,6 +43,11 @@ namespace Service.Implement
         public async Task<Product> UpdateAsync(Product entity)
         {
             return await _repo.UpdateAsync(entity);
+        }
+
+        public async Task<IEnumerable<Category>> GetListCategory()
+        {
+            return await _repo.GetListCategory();
         }
     }
 }
