@@ -67,7 +67,7 @@ namespace Repository.Implement
                     product.Description = entity.Description;
                     product.IsExpired = entity.IsExpired;
                     //product.CategoryId = entity.CategoryId;
-                    _context.Products.Update(product);
+                    _context.Products.Update(product).Property(p => p.Id).IsModified = false;
                     await _context.SaveChangesAsync();
                     return entity;
                 }
