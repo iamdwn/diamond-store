@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Service.Interface;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DiamondStore.Pages.DeliveryManagepage
 {
@@ -24,8 +25,11 @@ namespace DiamondStore.Pages.DeliveryManagepage
 
         public async Task OnGetAsync()
         {
-           var de = await _context.GetAllAsync();
+          
+            var de = await _context.GetAllAsync();
             Delivery = de.ToList();
+
+           
         }
     }
 }

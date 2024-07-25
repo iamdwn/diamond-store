@@ -89,7 +89,7 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                _context.Deliveries.Update(entity);
+                _context.Deliveries.Update(entity).Property(x => x.Id).IsModified = false; ;
                 await _context.SaveChangesAsync();
                 return entity;
             }

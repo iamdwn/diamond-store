@@ -41,6 +41,7 @@
         @foreach (var item in Model.Delivery)
         {
             <tr>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
@@ -67,6 +68,7 @@
                     {
                         <a asp-page="./Edit" asp-route-id="@item.DeliveryId">Confirm |</a>
                     }
+
                 </td>
             </tr>
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Implement
 {
-    public class DeliverymanagementRepo : IBaseCRUD<Delivery>, IDeliverManagementRepo
+    public class DeliverymanagementRepo : IDeliverManagementRepo
     {
         public async Task<Delivery> AddAsync(Delivery entity)
         {
@@ -63,34 +63,38 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Deliveries.Include(d => d.Manager)
-                .Include(d => d.Order)
-                .Include(d => d.Shiper).AsNoTracking().ToListAsync();
+                return await _context.Deliveries
+                         .Include(d => d.Manager)
+                         .Include(d => d.Order)
+                         .Include(d => d.Shiper)
+                         .ToListAsync();
             }
         }
 
         public async Task<Delivery> GetByIdAsync(string id)
         {
-            //using (var _context = new DiamondStoreContext())
-            //{
-            //    return await _context.Deliveries.Include(d => d.Manager)
-            //    .Include(d => d.Order)
-            //    .Include(d => d.Shiper).FindAsync(Guid.Parse(id));
-            //}
             using (var _context = new DiamondStoreContext())
             {
-                // Lấy Delivery theo Id
-                var delivery = await _context.Deliveries.FindAsync(Guid.Parse(id));
-
-                if (delivery != null)
-                {
-                    // Nếu có, áp dụng các Include để nạp dữ liệu liên quan
-                    _context.Entry(delivery).Reference(d => d.Manager).Load();
-                    _context.Entry(delivery).Reference(d => d.Order).Load();
-                    _context.Entry(delivery).Reference(d => d.Shiper).Load();
-                }
-                return delivery;
+              return  await _context.Deliveries
+            .Include(d => d.Manager)
+            .Include(d => d.Order)
+            .Include(d => d.Shiper)
+            .FirstOrDefaultAsync(d => d.DeliveryId == Guid.Parse(id));
             }
+            //using (var _context = new DiamondStoreContext())
+            //{
+            //    // Lấy Delivery theo Id
+            //    var delivery = await _context.Deliveries.FindAsync(Guid.Parse(id));
+
+            //    if (delivery != null)
+            //    {
+            //        // Nếu có, áp dụng các Include để nạp dữ liệu liên quan
+            //        _context.Entry(delivery).Reference(d => d.Manager).Load();
+            //        _context.Entry(delivery).Reference(d => d.Order).Load();
+            //        _context.Entry(delivery).Reference(d => d.Shiper).Load();
+            //    }
+            //    return delivery;
+            //}
         }
         public Task<bool> Update(Delivery entity)
         {
@@ -147,7 +151,7 @@ namespace Repository.Implement
             {
                 return await _context.Deliveries.Include(d => d.Manager)
                 .Include(d => d.Order)
-                .Include(d => d.Shiper).Where(x=> x.ShiperId ==shipperId).AsNoTracking().ToListAsync();
+                .Include(d => d.Shiper).Where(x => x.ShiperId == shipperId).AsNoTracking().ToListAsync();
             }
         }
 

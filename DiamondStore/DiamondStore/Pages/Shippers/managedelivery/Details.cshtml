@@ -5,45 +5,89 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+ <h1>Details</h1>
 
 <div>
     <h4>Delivery</h4>
     <hr />
-    <dl class="col">
-        <dt class="col-sm-2">
+    <dl class="row">
+        <!-- Delivery ID -->
+        <dt class="col-sm-3 font-weight-bold">
             @Html.DisplayNameFor(model => model.Delivery.Id)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Delivery.Id)
         </dd>
-        <dt class="col-sm-2">
+
+        <!-- Delivery Status -->
+        <dt class="col-sm-3 font-weight-bold">
             @Html.DisplayNameFor(model => model.Delivery.Status)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Delivery.Status)
         </dd>
-        <dt class="col-sm-2">
+
+        <!-- Manager Email -->
+        <dt class="col-sm-3 font-weight-bold">
             @Html.DisplayNameFor(model => model.Delivery.Manager)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Delivery.Manager.Email)
         </dd>
-        <dt class="col-sm-2">
+
+        <!-- Order Status -->
+        <dt class="col-sm-3 font-weight-bold">
             @Html.DisplayNameFor(model => model.Delivery.Order)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Delivery.Order.Status)
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Delivery.Order.Id)
         </dd>
-        <dt class="col-sm-2">
+
+        <!-- Shiper Email -->
+        <dt class="col-sm-3 font-weight-bold">
             @Html.DisplayNameFor(model => model.Delivery.Shiper)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Delivery.Shiper.Email)
         </dd>
+
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.OrderItem[0].Id)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.OrderItem[0].Order)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.OrderItem[0].Product)
+                    </th>
+                   
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @foreach (var item in Model.OrderItem)
+                {
+                    <tr class="bg-white border-b">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </th>
+                     
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </th>
+                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </dl>
     </dl>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Delivery.DeliveryId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
+ 
