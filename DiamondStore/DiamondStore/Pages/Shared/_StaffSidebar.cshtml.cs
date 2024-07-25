@@ -7,6 +7,7 @@ namespace DiamondStore.Pages.Shared
     {
         public void OnGet()
         {
+           
         }
     }
 }

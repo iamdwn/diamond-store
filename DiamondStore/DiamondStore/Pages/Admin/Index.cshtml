@@ -8,12 +8,20 @@
     <div class="flex justify-between my-4">
         <h1 class="text-3xl font-bold col-span-3">Customer Management</h1>
 
-        <a asp-page="./Create">
-            <button type="button" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800">
-                Create
-            </button>
-        </a>
+        @* <a asp-page="./Create">
+        <button type="button" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800">
+        Create
+        </button>
+        </a> *@
     </div>
+
+    <form method="get">
+        <div class="form-group" style="display: flex; align-items: center; margin-bottom: 20px">
+            <label for="searchTerm"> Search:</label>
+            <input style="margin: 0 15px 0 10px" type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="Enter FullName or Email">
+            <button type="submit" class="btn btn-primary"> Search </button>
+        </div>
+    </form>
 
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -42,25 +50,25 @@
             @foreach (var item in Model.user)
             {
                 <tr>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.UserId)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.Username)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.RoleName)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
-                    <td class="px-6 py-4">
+                    <td scope="col" class="px-6 py-3">
                         <a asp-page="./Edit" asp-route-id="@item.UserId">
                             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-                                Update
+                                Edit
                             </button>
                         </a>
                     </td>
@@ -68,4 +76,23 @@
             }
         </tbody>
     </table>
+
+    @* //Pagination *@
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Page("Index", new {CurrentPage = Model.CurrentPage - 1 })" tabindex="-1" aria-disabled="@(Model.CurrentPage == 1)">Previous</a>
+            </li>
+            @foreach(var i in Enumerable.Range(1, Model.TotalPages))
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="@Url.Page("Index", new {CurrentPage = i })">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Page("Index", new {CurrentPage = Model.CurrentPage + 1 })">Next</a>
+            </li>
+        </ul>
+    </nav>
+
 </div>
