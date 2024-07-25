@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Interface
 {
-    public interface IProductRepo
+    public interface IProductRepo : IBaseCRUD<Product>
     {
         Task<IEnumerable<Category>> GetListCategory();
     }

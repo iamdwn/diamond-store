@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Repository.Implement
 {
-    public class ProductRepo : IBaseCRUD<Product>, IProductRepo
+    public class ProductRepo : IProductRepo
     {
         public async Task<Product> AddAsync(Product entity)
         {
@@ -44,7 +44,7 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Products.Where(predicate).ToListAsync();
+                return await _context.Products.Where(predicate).Include(p => p.Category).ToListAsync();
             }
         }
 
@@ -52,7 +52,7 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Products.ToListAsync();
+                return await _context.Products.Include(p => p.Category).ToListAsync();
             }
         }
 
@@ -60,7 +60,7 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Products.FindAsync(Guid.Parse(id));
+                return await _context.Products.Include(p => p.Category).ThenInclude(c => c.Distributor).FirstOrDefaultAsync(p => p.ProductId.ToString().Equals(id));
             }
         }
 
@@ -73,9 +73,28 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                _context.Products.Update(entity);
-                await _context.SaveChangesAsync();
-                return entity;
+                var product = _context.Products.FirstOrDefault(p => p.ProductId.Equals(entity.ProductId));
+
+                if (product != null)
+                {
+                    product.Name = entity.Name;
+                    product.Price = entity.Price;
+                    product.Description = entity.Description;
+                    product.IsExpired = entity.IsExpired;
+                    //product.CategoryId = entity.CategoryId;
+                    _context.Products.Update(product).Property(p => p.Id).IsModified = false;
+                    await _context.SaveChangesAsync();
+                    return entity;
+                }
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<Category>> GetListCategory()
+        {
+            using (var _context = new DiamondStoreContext())
+            {
+                return await _context.Categories.ToListAsync();
             }
         }
 

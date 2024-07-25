@@ -21,8 +21,8 @@ namespace DiamondStore.Pages.Products
 
         public async Task<IActionResult> OnGet()
         {
-            var categorylist = await _productService.GetListCategory();
-            ViewData["CategoryId"] = new SelectList(categorylist, "CategoryId", "Id");
+            var products = await _productService.GetListCategory();
+            ViewData["CategoryId"] = new SelectList(products, "Id", "Id");
             return Page();
         }
 

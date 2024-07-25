@@ -13,10 +13,12 @@ namespace DiamondStore.Pages.Products
     public class IndexModel : PageModel
     {
         private readonly IProductService _productService;
+        private readonly IOrderItemService _orderItemService;
 
-        public IndexModel(IProductService productService)
+        public IndexModel(IProductService productService, IOrderItemService orderItemService)
         {
             _productService = productService;
+            _orderItemService = orderItemService;
         }
 
         public IList<Product> Products { get; set; } = default!;
@@ -25,6 +27,16 @@ namespace DiamondStore.Pages.Products
         {
             var products = await _productService.GetAllAsync();
             Products = products.ToList();
+        }
+
+        public async Task<IActionResult> OnPostAddToCartAsync(string id)
+        {
+            var newOrderItem = new OrderItem
+            {
+                ProductId = Guid.Parse(id),
+            };
+            await _orderItemService.AddAsync(newOrderItem);
+            return RedirectToPage();
         }
     }
 }
