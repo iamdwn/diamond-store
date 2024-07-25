@@ -1,6 +1,7 @@
 ﻿using BussinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Repository.Implement
@@ -65,7 +66,17 @@ namespace Repository.Implement
 
         public async Task<IEnumerable<OrderItem>> FindAsync(Expression<Func<OrderItem, bool>> predicate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var _context = new DiamondStoreContext())
+                {
+                    return await _context.OrderItems.Include(p => p.Product).Where(predicate).ToListAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<OrderItem> AddAsync(OrderItem entity)
@@ -98,6 +109,21 @@ namespace Repository.Implement
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public Task<OrderItem> Find(Expression<Func<OrderItem, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CreateAsync(OrderItem entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Update(OrderItem entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

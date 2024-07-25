@@ -1,0 +1,103 @@
+﻿@page
+@model DiamondStore.Pages.DeliveryPage.IndexModel
+@{
+    ViewData["Title"] = "Delivery Management";
+}
+
+<div class="relative overflow-x-auto py-4">
+    <div class="flex justify-between my-4">
+        <h1 class="text-3xl font-bold col-span-3">Monthly Revenue</h1>
+
+        <a asp-page="./Create">
+            <button type="button" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800">
+                Create Report
+            </button>
+        </a>
+    </div>
+
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.DeliveryList[0].DeliveryId)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.DeliveryList[0].UserName)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.DeliveryList[0].Email)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.product)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.DeliveryList[0].ProductPrice)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.DeliveryList[0].EndPrice)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.DeliveryList[0].ManagerName)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.DeliveryList[0].DeliveryStatus)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.DeliveryList[0].OrderDate)
+                </th>
+               
+                <th scope="col" class="px-6 py-3">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @foreach (var item in Model.DeliveryList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @foreach(var productItem in item.Product)
+                        {
+                          <a>
+                          @Html.DisplayFor(modelItem => productItem)
+                            </a>
+                            <br/>
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManagerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductPrice)
+                    </td>
+                    @* <td class="px-6 py-4">
+                        <a asp-page="./Edit" asp-route-id="@item.UserId">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                                Update
+                            </button>
+                        </a>
+                    </td> *@
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

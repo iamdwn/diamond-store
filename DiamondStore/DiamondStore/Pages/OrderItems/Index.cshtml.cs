@@ -21,9 +21,21 @@ namespace DiamondStore.Pages.OrderItems
 
         public IList<OrderItem> OrderItem { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        [FromQuery(Name = "orderId")]
+        public Guid OrderId { get; set; }
+
+        public async Task OnGetAsync(Guid? orderId)
         {
-            OrderItem = await _context.GetAllAsync();
+            if (orderId.HasValue)
+            {
+                // Lấy danh sách OrderItem theo OrderId
+                OrderItem = (await _context.FindAsync(oi => oi.OrderId == orderId)).ToList();
+            }
+            else
+            {
+                // Trường hợp không có OrderId, có thể hiển thị thông báo lỗi hoặc chuyển hướng.
+                OrderItem = new List<OrderItem>();
+            }
         }
     }
 }

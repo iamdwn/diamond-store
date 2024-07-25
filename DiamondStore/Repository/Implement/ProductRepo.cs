@@ -17,6 +17,11 @@ namespace Repository.Implement
             }
         }
 
+        public Task<bool> CreateAsync(Product entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteAsync(string id)
         {
             using (var _context = new DiamondStoreContext())
@@ -28,6 +33,11 @@ namespace Repository.Implement
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+        public Task<Product> Find(Expression<Func<Product, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Product>> FindAsync(Expression<Func<Product, bool>> predicate)
@@ -52,6 +62,11 @@ namespace Repository.Implement
             {
                 return await _context.Products.Include(p => p.Category).ThenInclude(c => c.Distributor).FirstOrDefaultAsync(p => p.ProductId.ToString().Equals(id));
             }
+        }
+
+        public Task<bool> Update(Product entity)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Product> UpdateAsync(Product entity)

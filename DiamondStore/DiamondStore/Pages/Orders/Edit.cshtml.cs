@@ -13,7 +13,7 @@ namespace DiamondStore.Pages.Orders
         public EditModel(IOrderService orderService)
         {
             _context = orderService;
-            
+
         }
 
         [BindProperty]

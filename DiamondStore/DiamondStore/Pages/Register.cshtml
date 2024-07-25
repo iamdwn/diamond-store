@@ -1,0 +1,123 @@
+﻿@page
+@model DiamondStore.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<style>
+    .no-underline {
+        text-decoration: none;
+    }
+
+    .gradient-icon {
+        font-size: 1.25rem;
+        background: white;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid #dee2e6;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+        max-width: 1200px;
+    }
+
+    .card-title {
+        color: #007bff;
+    }
+
+    .input-group-text {
+        background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        border: 1px solid linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+    }
+
+        .input-group-text .gradient-icon {
+            mask: none;
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        }
+
+    .btn-primary {
+        background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        border-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+    }
+
+        .btn-primary:hover {
+            background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+            border-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        }
+
+    body {
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<partial name="_Toast" />
+
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="card-title text-center mb-4 text-black-50">Register</h2>
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="Input.username" class="form-label">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="fullname-addon"><i class="fas fa-user gradient-icon"></i></span>
+                                <input asp-for="Input.username" class="form-control" aria-describedby="fullname-addon" />
+                            </div>
+                            <span asp-validation-for="Input.username" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.email" class="form-label">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="email-addon"><i class="fas fa-envelope gradient-icon"></i></span>
+                                <input asp-for="Input.email" class="form-control" aria-describedby="email-addon" />
+                            </div>
+                            <span asp-validation-for="Input.email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="password-addon"><i class="fas fa-lock gradient-icon"></i></span>
+                                <input asp-for="Input.password" class="form-control" type="password" aria-describedby="password-addon" />
+                            </div>
+                            <span asp-validation-for="Input.password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.confirmPassword" class="form-label">Confirm Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="confirm-password-addon"><i class="fas fa-lock gradient-icon"></i></span>
+                                <input asp-for="Input.confirmPassword" class="form-control" type="password" aria-describedby="confirm-password-addon" />
+                            </div>
+                            <span asp-validation-for="Input.confirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-gradient" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%); border: none; color:white">Register</button>
+                        </div>
+                    </form>
+                    <div class="mt-3 text-center">
+                        <p>
+                            <a asp-page="/Account/Login" class="no-underline">Already have an account? Login Now</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

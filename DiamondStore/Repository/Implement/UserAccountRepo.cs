@@ -1,6 +1,7 @@
 ﻿using BussinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
+using System;
 using System.Linq.Expressions;
 
 namespace Repository.Implement
@@ -13,7 +14,7 @@ namespace Repository.Implement
             {
                 using (var _content = new DiamondStoreContext())
                 {
-                    return await _content.Users.FirstAsync(x => x.UserId == Guid.Parse(id));
+                    return await _content.Users.Include(r => r.Role).FirstAsync(x => x.UserId == Guid.Parse(id));
                 }
             }
 
@@ -32,8 +33,7 @@ namespace Repository.Implement
                     var user = await _context.Users.FindAsync(entity.UserId);
                     if (user != null)
                     {
-                        user.Password = entity.Password;
-                        user.Email = entity.Email;
+                        _context.Entry(user).CurrentValues.SetValues(entity);
                         await _context.SaveChangesAsync();
                     }
                     return user;
@@ -62,7 +62,48 @@ namespace Repository.Implement
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using (var context = new DiamondStoreContext())
+            {
+                return await context.Users.Include(r => r.Role).ToListAsync();
+            }
+        }
+
+        public async Task<User> Find(Expression<Func<User, bool>> predicate)
+        {
+            using (var context = new DiamondStoreContext())
+            {
+                return await context.Users.Include(r => r.Role).FirstOrDefaultAsync(predicate);
+            }
+        }
+
+        public async Task<bool> CreateAsync(User entity)
+        {
+            using (var context = new DiamondStoreContext())
+            {
+                context.Users.Add(entity);
+                return await context.SaveChangesAsync() > 0;
+            }
+        }
+
+        public async Task<bool> Update(User entity)
+        {
+            using (var context = new DiamondStoreContext())
+            {
+                var existingUser = await context.Users.FirstOrDefaultAsync(c => c.Email.Equals(entity.Email));
+                if (existingUser != null)
+                {
+                    existingUser.Username = entity.Username ?? existingUser.Username;
+                    existingUser.Email = entity.Email ?? existingUser.Email;
+                    existingUser.Status = entity.Status ?? existingUser.Status;
+                    existingUser.Password = entity.Password ?? existingUser.Password;
+
+                    //context.Users.Update(existingUser);
+                    //context.Entry(entity).State = EntityState.Modified;
+                    //await context.SaveChangesAsync();
+                }
+
+                return await context.SaveChangesAsync() > 0;
+            }
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿@if (TempData["toast-error"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script type="text/javascript">
+        var notyf = new Notyf({
+            duration: 3000,
+            position: {
+                x: 'center',
+                y: 'top',
+            },
+        });
+        notyf.error('@TempData["toast-error"]');
+    </script>
+}
+
+@if (TempData["toast-success"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script type="text/javascript">
+        var notyf = new Notyf({
+            duration: 3000,
+            position: {
+                x: 'center',
+                y: 'top',
+            },
+        });
+        notyf.success('@TempData["toast-success"]');
+    </script>
+}
