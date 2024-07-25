@@ -53,7 +53,9 @@ namespace Repository.Implement
         {
             using (var _context = new DiamondStoreContext())
             {
-                return await _context.Deliveries.Where(predicate).ToListAsync();
+                return await _context.Deliveries.Include(o => o.Order)
+                    .Include(o => o.Shiper)
+                    .Where(predicate).ToListAsync();
             }
         }
 

@@ -1,11 +1,12 @@
 ﻿@page
-@model RazorPage.Pages.Account.RegisterModel
+@model DiamondStore.Pages.LoginModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Login";
     Layout = null;
 }
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 <style>
     .no-underline {
         text-decoration: none;
@@ -66,54 +67,47 @@
         justify-content: center;
     }
 </style>
-<partial name="_Toast" />
 
 <div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <partial name="_Toast" />
     <div class="row justify-content-center w-100">
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body p-4">
-                    <h2 class="card-title text-center mb-4 text-black-50">Register</h2>
+                    <h2 class="card-title text-center mb-4 text-black-50">Login</h2>
+
+                    <!-- Alert for Error Messages -->
+@*                     @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @ViewData["ErrorMessage"]
+                        </div>
+                    } *@
+
                     <form method="post">
                         <div class="mb-3">
-                            <label asp-for="Input.username" class="form-label">Username</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="fullname-addon"><i class="fas fa-user gradient-icon"></i></span>
-                                <input asp-for="Input.username" class="form-control" aria-describedby="fullname-addon" />
-                            </div>
-                            <span asp-validation-for="Input.username" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.email" class="form-label">Email</label>
+                            <label asp-for="Input.Email" class="form-label">Email address</label>
                             <div class="input-group">
                                 <span class="input-group-text" id="email-addon"><i class="fas fa-envelope gradient-icon"></i></span>
-                                <input asp-for="Input.email" class="form-control" aria-describedby="email-addon" />
+                                <input asp-for="Input.Email" type="email" class="form-control" aria-describedby="emailHelp">
                             </div>
-                            <span asp-validation-for="Input.email" class="text-danger"></span>
+                            <div id="emailHelp" class="form-text"></div>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="Input.password" class="form-label">Password</label>
+                            <label asp-for="Input.Password" class="form-label">Password</label>
                             <div class="input-group">
                                 <span class="input-group-text" id="password-addon"><i class="fas fa-lock gradient-icon"></i></span>
-                                <input asp-for="Input.password" class="form-control" type="password" aria-describedby="password-addon" />
+                                <input asp-for="Input.Password" type="password" class="form-control">
                             </div>
-                            <span asp-validation-for="Input.password" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.confirmPassword" class="form-label">Confirm Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="confirm-password-addon"><i class="fas fa-lock gradient-icon"></i></span>
-                                <input asp-for="Input.confirmPassword" class="form-control" type="password" aria-describedby="confirm-password-addon" />
-                            </div>
-                            <span asp-validation-for="Input.confirmPassword" class="text-danger"></span>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-gradient" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%); border: none; color:white">Register</button>
+                            <button type="submit" class="btn btn-gradient" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%); border: none; color:white">Login</button>
                         </div>
+                        <h3 align="center" style="color:red"> @Html.ValidationMessage("Error") </h3>
                     </form>
                     <div class="mt-3 text-center">
                         <p>
-                            <a asp-page="/Account/Login" class="no-underline">Already have an account? Login Now</a>
+                            <a asp-page="/Account/Register" class="no-underline">Do not have an account? Register Now</a>
                         </p>
                     </div>
                 </div>

@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Ship\**" />
     <Compile Remove="Pages\Vouchers\**" />
+    <Content Remove="Pages\Ship\**" />
     <Content Remove="Pages\Vouchers\**" />
+    <EmbeddedResource Remove="Pages\Ship\**" />
     <EmbeddedResource Remove="Pages\Vouchers\**" />
+    <None Remove="Pages\Ship\**" />
     <None Remove="Pages\Vouchers\**" />
   </ItemGroup>
 

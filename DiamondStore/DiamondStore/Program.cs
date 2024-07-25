@@ -94,5 +94,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapFallbackToPage("/Login");
 
 app.Run();

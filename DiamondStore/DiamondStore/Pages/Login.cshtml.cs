@@ -6,7 +6,7 @@ using Service.Dtos;
 using Service.Interface;
 using System.ComponentModel.DataAnnotations;
 
-namespace RazorPage.Pages.Account
+namespace DiamondStore.Pages
 {
     public class LoginModel : PageModel
     {

@@ -10,6 +10,7 @@ using BussinessObject.Models;
 using BussinessObject.DTO;
 using Service.Interface;
 using System.Data;
+using Service;
 
 namespace DiamondStore.Pages.Admin
 {
@@ -40,6 +41,17 @@ namespace DiamondStore.Pages.Admin
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
+            var userDto = HttpContext.Session.GetObjectFromJson<UserDTO>("User");
+            if (userDto != null)
+            {
+                var role = userDto.RoleId.ToString();
+                if (!role.Equals("c423e182-4af3-4451-9d60-41e77ff23b0f")) ;
+                {
+                    return Redirect("/Login");
+                }
+
+            }
+
             if (id == null)
             {
                 return NotFound();
