@@ -37,7 +37,7 @@ namespace DiamondStore.Pages
                 var role = HttpContext.Session.GetInt32("UserRole");
                 if (role == 3 || role == 4)
                 {
-                    Response.Redirect("Admin/Index");
+                    Response.Redirect("/Admin/Index");
                 }
             }
         }

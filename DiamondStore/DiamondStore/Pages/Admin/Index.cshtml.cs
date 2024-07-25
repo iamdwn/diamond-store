@@ -22,27 +22,20 @@ namespace DiamondStore.Pages.Admin
             _userAccountService = userAccountService;
         }
 
-        public IList<UserDTO> user { get;set; } = default!;
+        public IList<UserDTO> user { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
             //Check xem nguoi dang dang nhap co phai la admin khong
-            var userDto = HttpContext.Session.GetObjectFromJson<UserDTO>("User");
-            if (userDto != null)
+            var UserRole = HttpContext.Session.GetInt32("UserRole");
+            if (UserRole != 4)
             {
-                var role = userDto.RoleId.ToString();
-                if (!role.Equals("c423e182-4af3-4451-9d60-41e77ff23b0f"));
-                {
-                    return Redirect("/Login");
-                }
-
+                return Redirect("../Login");
             }
 
             user = await _userAccountService.GetAllAsyncByAdmin();
             return Page();
-            //User = await _context.Users
-            //    .Include(u => u.Role).ToListAsync();
-
+         
         }
     }
 }
