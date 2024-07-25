@@ -1,0 +1,80 @@
+﻿@page
+@model DiamondStore.Pages.Products.DetailsModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mx-auto mt-8">
+    <h1 class="text-3xl font-bold mb-6">Product Details</h1>
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-2xl font-semibold mb-4">Product</h2>
+        <hr class="mb-4" />
+        @{
+            var userRole = HttpContext.Session.GetInt32("UserRole");
+        }
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+            <dt class="font-medium">ID</dt>
+            <dd class="mb-2">@Html.DisplayFor(model => model.Product.Id)</dd>
+
+            <dt class="font-medium">Name</dt>
+            <dd class="mb-2">@Html.DisplayFor(model => model.Product.Name)</dd>
+
+            <dt class="font-medium">Description</dt>
+            <dd class="mb-2">@Html.DisplayFor(model => model.Product.Description)</dd>
+
+            <dt class="font-medium">Price</dt>
+            <dd class="mb-2">@Html.DisplayFor(model => model.Product.Price)</dd>
+
+            <dt class="font-medium">Is Expired</dt>
+            <dd class="mb-2">@Html.DisplayFor(model => model.Product.IsExpired)</dd>
+
+            <dt class="font-medium">Category</dt>
+            <dd class="mb-2">
+                @* <div>
+                <strong>Category ID:</strong> @Html.DisplayFor(model => model.Product.Category.CategoryId)
+                </div>
+                <div>
+                <strong>Internal ID:</strong> @Html.DisplayFor(model => model.Product.Category.Id)
+                </div> *@
+                <div>
+                    <strong>GIA Certificate:</strong> @Html.DisplayFor(model => model.Product.Category.GiaCertificate)
+                </div>
+                <div>
+                    <strong>Cut:</strong> @Html.DisplayFor(model => model.Product.Category.Cut)
+                </div>
+                <div>
+                    <strong>Color:</strong> @Html.DisplayFor(model => model.Product.Category.Color)
+                </div>
+                <div>
+                    <strong>Clarity:</strong> @Html.DisplayFor(model => model.Product.Category.Clarity)
+                </div>
+                <div>
+                    <strong>Carat:</strong> @Html.DisplayFor(model => model.Product.Category.Carat)
+                </div>
+                @* <div>
+                <strong>Distributor ID:</strong> @Html.DisplayFor(model => model.Product.Category.DistributorId)
+                </div> *@
+            </dd>
+            @if (Model.Product.Category.Distributor != null)
+            {
+                <dt class="font-medium">Distributor</dt>
+                <dd class="mb-2">
+                    <div>
+                        <strong>Distributor Name:</strong> @Html.DisplayFor(model => model.Product.Category.Distributor.DistributorName)
+                    </div>
+                    <div>
+                        <strong>Locate:</strong> @Html.DisplayFor(model => model.Product.Category.Distributor.Locate)
+                    </div>
+                </dd>
+            }
+        </dl>
+    </div>
+    <div class="mt-4">
+        @if (userRole == 3)
+        {
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" asp-page="./Edit" asp-route-id="@Model.Product.ProductId">Edit</a>
+        }
+        <a class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2" asp-page="./Index">Back to List</a>
+    </div>
+</div>

@@ -5,7 +5,7 @@ using Repository.Dtos;
 using Service.Dtos;
 using Service.Interface;
 
-namespace RazorPage.Pages.Account
+namespace DiamondStore.Pages
 {
     public class RegisterModel : PageModel
     {

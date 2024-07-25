@@ -1,0 +1,74 @@
+﻿@page
+@model DiamondStore.Pages.DeliveryManagepage.IndexModel
+
+@{
+    ViewData["Title"] = "Delivery";
+}
+
+<table class="table">
+    @{
+        var userRole = HttpContext.Session.GetInt32("UserRole");
+    }
+
+    @if (userRole == 3)
+    {
+        <p>
+            <a asp-page="Create">Create New</a>
+        </p>
+    }
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Manager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivery[0].Shiper)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Delivery)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manager.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shiper.Email)
+                </td>
+                <td>
+                    @if (userRole == 3)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.DeliveryId">Edit |</a>
+                        <a asp-page="./Delete" asp-route-id="@item.DeliveryId">Delete |</a>
+                    }
+
+                    @if (userRole == 2)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.DeliveryId">Confirm |</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

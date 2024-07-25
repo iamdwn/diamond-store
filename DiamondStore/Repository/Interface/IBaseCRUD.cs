@@ -17,5 +17,6 @@ namespace Repository.Interface
         Task DeleteAsync(string id);
         Task<bool> CreateAsync(T entity);
         Task<bool> Update(T entity);
+      
     }
 }

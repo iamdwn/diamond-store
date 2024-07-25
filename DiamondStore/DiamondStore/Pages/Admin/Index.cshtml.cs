@@ -9,6 +9,8 @@ using BussinessObject.Models;
 using Service.Interface;
 using Service.Implement;
 using BussinessObject.DTO;
+using Service;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DiamondStore.Pages.Admin
 {
@@ -21,21 +23,44 @@ namespace DiamondStore.Pages.Admin
             _userAccountService = userAccountService;
         }
 
-        public IList<UserDTO> user { get;set; } = default!;
+        public int CurrentPage { get; set; } = 1;
+        public int TotalPages { get; set; }
+        public string Keyword { get; set; }
 
-        public async Task OnGetAsync()
+        public IList<UserDTO> user { get; set; } = default!;
+
+
+        public async Task<IActionResult> OnGetAsync(int currentPage = 1, string searchTerm = "")
         {
             //Check xem nguoi dang dang nhap co phai la admin khong
-            //if (HttpContext.Session.GetString("Role") != "Admin")
-            //{
-            //    Response.Redirect("/Login");
-            //}
+            var UserRole = HttpContext.Session.GetInt32("UserRole");
+            if (UserRole != 4)
+            {
+                return Redirect("../Login");
+            }
 
             user = await _userAccountService.GetAllAsyncByAdmin();
+            CurrentPage = currentPage;
+            int pageSize = 4;
+            
 
-            //User = await _context.Users
-            //    .Include(u => u.Role).ToListAsync();
+            //Search
+            if (!searchTerm.IsNullOrEmpty())
+            {
+                Keyword = searchTerm;
+                //Search by FullName or Email
+                user = user.Where(x => x.Username.ToLower().Trim().Contains(searchTerm.ToLower().Trim())
+                || x.Email.ToLower().Trim().Contains(searchTerm.ToLower().Trim())).ToList();
 
+            }
+
+            int total = user.Count();
+            TotalPages = (int)Math.Ceiling((double)total /pageSize);
+
+            user = user.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
+            return Page();
+         
         }
     }
 }

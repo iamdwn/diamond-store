@@ -10,6 +10,9 @@ using BussinessObject.Models;
 using BussinessObject.DTO;
 using Service.Interface;
 using System.Data;
+using Service;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DiamondStore.Pages.Admin
 {
@@ -23,6 +26,10 @@ namespace DiamondStore.Pages.Admin
             _userAccountService = userAccountService;
             _roleService = roleService;
         }
+
+        [BindProperty]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string email { get; set; }
 
         [BindProperty]
         public UserDTO user { get; set; } = default!;
@@ -40,6 +47,12 @@ namespace DiamondStore.Pages.Admin
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
+            var UserRole = HttpContext.Session.GetInt32("UserRole");
+            if (UserRole != 4)
+            {
+                return Redirect("../Login");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -47,7 +60,7 @@ namespace DiamondStore.Pages.Admin
             //Bắt lỗi validation
 
              user = await _userAccountService.GetByIdAsyncByAdmin(id.ToString());
-
+            email = user.Email;
             if (user == null)
             {
                 return NotFound();
@@ -75,9 +88,9 @@ namespace DiamondStore.Pages.Admin
                 data.Username = user.Username;
             } 
 
-            if (user.Email != null)
+            if (!email.IsNullOrEmpty())
             {
-                data.Email = user.Email;
+                data.Email = email;
             }
 
             if (user.Status != null)

@@ -8,12 +8,17 @@
 <div class="relative overflow-x-auto py-4">
     <div class="flex justify-between my-4">
         <h1 class="text-3xl font-bold col-span-3">Order Items</h1>
-        
-        <a asp-page="./Create">
-            <button type="button" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800">
+        @{
+            var userRole = HttpContext.Session.GetInt32("UserRole");
+        }
+        @if (userRole == 3)
+        {
+            <a asp-page="./Create">
+                <button type="button" class="text-sm-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800">
                 Create
             </button>
         </a>
+        }
     </div>
 
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">

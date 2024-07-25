@@ -8,11 +8,8 @@
     <div class="flex justify-between my-4">
         <h1 class="text-3xl font-bold col-span-3">Monthly Revenue</h1>
 
-        <a asp-page="./Create">
-            <button type="button" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800">
-                Create Report
-            </button>
-        </a>
+        <a class="btn btn-primary" asp-action="ExportRevenue">Export Report</a>
+
     </div>
 
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -45,52 +42,74 @@
                 <th scope="col" class="px-6 py-3">
                     @Html.DisplayNameFor(model => model.DeliveryList[0].OrderDate)
                 </th>
-               
-                <th scope="col" class="px-6 py-3">
-                    Actions
-                </th>
+
             </tr>
         </thead>
         <tbody id="tableBody">
             @foreach (var item in Model.DeliveryList)
             {
                 <tr>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.DeliveryId)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.UserName)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
-                    <td>
-                        @Model.product
+                    <td scope="col" class="px-6 py-3">
+                        @foreach (var productItem in item.Product)
+                        {
+                            <a>
+                                @Html.DisplayFor(modelItem => productItem)
+                            </a>
+                            <br />
+                        }
+
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.ProductPrice)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.EndPrice)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.ManagerName)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.DeliveryStatus)
                     </td>
-                    <td>
+                    <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.ProductPrice)
                     </td>
                     @* <td class="px-6 py-4">
-                        <a asp-page="./Edit" asp-route-id="@item.UserId">
-                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-                                Update
-                            </button>
-                        </a>
-                    </td> *@
+                <a asp-page="./Edit" asp-route-id="@item.UserId">
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                Update
+                </button>
+                </a>
+                </td> *@
                 </tr>
             }
         </tbody>
+
+        @* Pagination *@
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Page("Index", new {CurrentPage = Model.CurrentPage - 1 })" tabindex="-1" aria-disabled="@(Model.CurrentPage == 1)">Previous</a>
+            </li>
+            @foreach (var i in Enumerable.Range(1, Model.TotalPages))
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Page("Index", new {CurrentPage = i })">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Page("Index", new {CurrentPage = Model.CurrentPage + 1 })">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>

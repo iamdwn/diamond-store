@@ -1,0 +1,67 @@
+﻿@page
+@model DiamondStore.Pages.Products.EditModel
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="container mx-auto mt-8">
+    <h1 class="text-3xl font-bold mb-6">@ViewData["Title"]</h1>
+
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-2xl font-semibold mb-4">Edit Product</h2>
+        <hr class="mb-4" />
+        <form method="post" class="space-y-4">
+            <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+            <input type="hidden" asp-for="Product.ProductId" />
+
+            @* <div>
+                <label asp-for="Product.Id" class="block text-sm font-medium text-gray-700"></label>
+                <input asp-for="Product.Id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <span asp-validation-for="Product.Id" class="text-red-500"></span>
+            </div> *@
+
+            <div>
+                <label asp-for="Product.Name" class="block text-sm font-medium text-gray-700"></label>
+                <input asp-for="Product.Name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <span asp-validation-for="Product.Name" class="text-red-500"></span>
+            </div>
+
+            <div>
+                <label asp-for="Product.Description" class="block text-sm font-medium text-gray-700"></label>
+                <input asp-for="Product.Description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <span asp-validation-for="Product.Description" class="text-red-500"></span>
+            </div>
+
+            <div>
+                <label asp-for="Product.Price" class="block text-sm font-medium text-gray-700"></label>
+                <input asp-for="Product.Price" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <span asp-validation-for="Product.Price" class="text-red-500"></span>
+            </div>
+
+            <div class="flex items-center">
+                <input type="checkbox" asp-for="Product.IsExpired" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" />
+                <label asp-for="Product.IsExpired" class="ml-2 block text-sm text-gray-900"></label>
+            </div>
+
+            @* <div>
+                <label asp-for="Product.CategoryId" class="block text-sm font-medium text-gray-700"></label>
+                <select asp-for="Product.CategoryId" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="Product.CategoryId" class="text-red-500"></span>
+            </div> *@
+
+            <div>
+                <input type="submit" value="Save" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+            </div>
+            <div class="mt-4">
+                <a class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" asp-page="./Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,61 @@
+﻿@page
+@model DiamondStore.Pages.Warranties.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Warranty[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Warranty[0].IssueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Warranty[0].ExpirationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Warranty[0].Product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Warranty[0].User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Warranty)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IssueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpirationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.WarrantyId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.WarrantyId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.WarrantyId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

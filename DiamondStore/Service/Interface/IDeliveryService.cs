@@ -1,5 +1,6 @@
 ﻿using BussinessObject.DTO;
 using BussinessObject.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 
 namespace Service.Interface
@@ -10,8 +11,9 @@ namespace Service.Interface
         Task<Delivery> GetByIdAsync(string id);
         Task<IEnumerable<Delivery>> FindAsync(Expression<Func<Delivery, bool>> predicate);
         Task<Delivery> AddAsync(Delivery entity);
-        Task<Delivery> UpdateAsync(Delivery entity);
+        Task UpdateAsync(Delivery entity);
         Task DeleteAsync(string id);
         Task<List<DeliveryResponse>> GetDeliveryResponsesByAdmin();
+        Task<FileResult> ExportRevenue();
     }
 }
