@@ -8,10 +8,12 @@ namespace Service.Implement
     public class ProductService : IProductService
     {
         private readonly IBaseCRUD<Product> _repo;
+        private readonly IProductRepo _productRepo;
 
-        public ProductService(IBaseCRUD<Product> repo)
+        public ProductService(IBaseCRUD<Product> repo, IProductRepo productRepo)
         {
             _repo = repo;
+            _productRepo = productRepo;
         }
 
         public async Task<Product> AddAsync(Product entity)
@@ -42,6 +44,10 @@ namespace Service.Implement
         public async Task<Product> UpdateAsync(Product entity)
         {
             return await _repo.UpdateAsync(entity);
+        }
+        public async Task<IEnumerable<Category>> GetListCategory()
+        {
+            return await _productRepo.GetListCategory();
         }
     }
 }

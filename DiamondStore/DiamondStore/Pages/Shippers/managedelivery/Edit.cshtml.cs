@@ -10,7 +10,7 @@ using BussinessObject.Models;
 using Service.Interface;
 using Service.Implement;
 
-namespace DiamondStore.Pages.Shippers
+namespace DiamondStore.Pages.Shippers.managedelivery
 {
     public class EditModel : PageModel
     {
@@ -41,10 +41,10 @@ namespace DiamondStore.Pages.Shippers
             }
             Delivery = delivery;
             var manager = await _context.GetManagerList();
-            var order  =await _context.GetOrderList();
-            var shipper= await _context.GetShipperList();
+            var order = await _context.GetOrderList();
+            var shipper = await _context.GetShipperList();
             ViewData["ManagerId"] = new SelectList(manager, "UserId", "Email");
-           ViewData["OrderId"] = new SelectList(order, "OrderId", "Status");
+            ViewData["OrderId"] = new SelectList(order, "OrderId", "Status");
             ViewData["ShiperId"] = new SelectList(shipper, "UserId", "Email");
             return Page();
         }

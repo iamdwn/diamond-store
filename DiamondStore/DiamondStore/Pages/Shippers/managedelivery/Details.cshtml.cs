@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Service.Interface;
 
-namespace DiamondStore.Pages.Shippers
+namespace DiamondStore.Pages.Shippers.managedelivery
 {
     public class DetailsModel : PageModel
     {
-       private readonly IDeliveryService _context;
+        private readonly IDeliveryService _context;
 
         public DetailsModel(IDeliveryService context)
         {

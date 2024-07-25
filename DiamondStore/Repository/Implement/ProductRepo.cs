@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Repository.Implement
 {
-    public class ProductRepo : IBaseCRUD<Product>
+    public class ProductRepo : IBaseCRUD<Product>, IProductRepo
     {
         public async Task<Product> AddAsync(Product entity)
         {
@@ -76,6 +76,14 @@ namespace Repository.Implement
                 _context.Products.Update(entity);
                 await _context.SaveChangesAsync();
                 return entity;
+            }
+        }
+
+        public async Task<IEnumerable<Category>> GetListCategory()
+        {
+            using (var _context = new DiamondStoreContext())
+            {
+                return await _context.Categories.ToListAsync();
             }
         }
     }
