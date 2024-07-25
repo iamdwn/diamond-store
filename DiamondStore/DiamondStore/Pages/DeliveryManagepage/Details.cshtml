@@ -47,10 +47,40 @@
         <dt class="col-sm-3 font-weight-bold">
             @Html.DisplayNameFor(model => model.Delivery.Shiper)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Delivery.Shiper.Email)
         </dd>
-        
+
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.OrderItem[0].Id)
+                    </th>
+                   
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.OrderItem[0].Product)
+                    </th>
+                   
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @foreach (var item in Model.OrderItem)
+                {
+                    <tr class="bg-white border-b">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </th>
+                     
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </th>
+                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+
     </dl>
     </dl>
 </div>

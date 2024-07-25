@@ -7,24 +7,26 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Service.Interface;
+using Microsoft.Identity.Client;
 
 namespace DiamondStore.Pages.DeliveryManagepage
 {
     public class DetailsModel : PageModel
     {
-       private readonly IDeliveryService _context;
-       private readonly IOrderService _order;
-       private readonly IUserAccountService _userAccountService;
-       private readonly IOrderItemService _item;
-        
+        private readonly IDeliverymanagement _context;
+        private readonly IOrderService _order;
 
-        public DetailsModel(IDeliveryService context, IOrderService service, IUserAccountService userAccountService)
+        private readonly IOrderItemService _item;
+
+
+        public DetailsModel(IDeliverymanagement context, IOrderService service,  IOrderItemService item)
         {
-            _userAccountService = userAccountService;
+            
             _context = context;
             _order = service;
+            _item = item;
         }
-        public IList<OrderItem> OrderItem { get; set; } 
+        public IList<OrderItem> OrderItem { get; set; }
         public Delivery Delivery { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
@@ -33,19 +35,19 @@ namespace DiamondStore.Pages.DeliveryManagepage
             {
                 return NotFound();
             }
-                
+
             var delivery = await _context.GetByIdAsync(id.ToString());
-            var Order = await _order.GetByIdAsync(delivery.OrderId.ToString());
-            var manager = await _userAccountService.GetByIdAsync(delivery.ManagerId.ToString());
-            delivery.Manager = manager;
-            var shipper =await _userAccountService.GetByIdAsync(delivery.ShiperId.ToString());
-            delivery.Shiper = shipper;
-            delivery.Order = Order;
-            //if (delivery.OrderId.HasValue)
-            //{
-            //    // Lấy danh sách OrderItem theo OrderId
-            //   OrderItem = (await _item.FindAsync(oi => oi.OrderId == delivery.OrderId)).ToList();
-            //}
+            //var Order = await _order.GetByIdAsync(delivery.OrderId.ToString());
+            //var manager = await _userAccountService.GetByIdAsync(delivery.ManagerId.ToString());
+            //delivery.Manager = manager;
+            //var shipper = await _userAccountService.GetByIdAsync(delivery.ShiperId.ToString());
+            //delivery.Shiper = shipper;
+            //delivery.Order = Order;
+            if (delivery.OrderId.HasValue)
+            {
+                // Lấy danh sách OrderItem theo OrderId
+                OrderItem = (await _item.FindAsync(oi => oi.OrderId == delivery.OrderId)).ToList();
+            }
 
             if (delivery == null)
             {
@@ -53,7 +55,7 @@ namespace DiamondStore.Pages.DeliveryManagepage
             }
             else
             {
-               
+
                 Delivery = delivery;
             }
             return Page();
