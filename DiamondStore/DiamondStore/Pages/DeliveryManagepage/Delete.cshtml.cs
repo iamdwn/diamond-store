@@ -6,14 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
+using Service.Interface;
 
 namespace DiamondStore.Pages.DeliveryManagepage
 {
     public class DeleteModel : PageModel
     {
-        private readonly BussinessObject.Models.DiamondStoreContext _context;
+        private readonly IDeliverymanagement _context;
 
-        public DeleteModel(BussinessObject.Models.DiamondStoreContext context)
+        public DeleteModel(IDeliverymanagement context)
         {
             _context = context;
         }
@@ -28,7 +29,7 @@ namespace DiamondStore.Pages.DeliveryManagepage
                 return NotFound();
             }
 
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(m => m.DeliveryId == id);
+            var delivery = await _context.GetByIdAsync( id.ToString());
 
             if (delivery == null)
             {
@@ -48,12 +49,12 @@ namespace DiamondStore.Pages.DeliveryManagepage
                 return NotFound();
             }
 
-            var delivery = await _context.Deliveries.FindAsync(id);
+            var delivery = await _context.GetByIdAsync(id.ToString());
             if (delivery != null)
             {
                 Delivery = delivery;
-                _context.Deliveries.Remove(Delivery);
-                await _context.SaveChangesAsync();
+              await  _context.DeleteAsync(id.ToString());
+               
             }
 
             return RedirectToPage("./Index");
