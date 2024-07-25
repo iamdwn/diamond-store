@@ -14,7 +14,7 @@
 
     .gradient-icon {
         font-size: 1.25rem;
-        background: white;
+        background: linear-gradient(to right, #ef4444, #3b82f6); /* Matching the gradient from the logo */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -31,36 +31,27 @@
     }
 
     .card-title {
-        color: #007bff;
+        color: #3b82f6; /* Blue color to match the theme */
     }
 
     .input-group-text {
-        background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        border: 1px solid linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        background: linear-gradient(to right, #ef4444, #3b82f6); /* Matching the gradient from the logo */
+        border: none;
+        color: white;
     }
 
-        .input-group-text .gradient-icon {
-            mask: none;
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.5rem;
-            color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        }
-
     .btn-primary {
-        background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        border-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        background: linear-gradient(to right, #ef4444, #3b82f6); /* Matching the gradient from the logo */
+        border: none;
     }
 
         .btn-primary:hover {
-            background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-            border-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+            background: linear-gradient(to right, #ef4444, #3b82f6); /* Matching the gradient from the logo */
+            border: none;
         }
 
     body {
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
+        background: linear-gradient(to right, #ef4444, #3b82f6); /* Matching the gradient from the logo */
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -74,14 +65,15 @@
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body p-4">
-                    <h2 class="card-title text-center mb-4 text-black-50">Login</h2>
+                    <h2 class="card-title text-center mb-4">Login</h2>
 
                     <!-- Alert for Error Messages -->
-@*                     @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                    @* Uncomment this if you want to display error messages *@
+                    @* @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
                     {
-                        <div class="alert alert-danger" role="alert">
-                            @ViewData["ErrorMessage"]
-                        </div>
+                    <div class="alert alert-danger" role="alert">
+                    @ViewData["ErrorMessage"]
+                    </div>
                     } *@
 
                     <form method="post">
@@ -101,7 +93,7 @@
                             </div>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-gradient" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%); border: none; color:white">Login</button>
+                            <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                         <h3 align="center" style="color:red"> @Html.ValidationMessage("Error") </h3>
                     </form>
