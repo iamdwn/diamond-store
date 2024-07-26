@@ -21,18 +21,20 @@ namespace DiamondStore.Pages.Products
 
         public async Task<IActionResult> OnGet()
         {
-            var products = await _productService.GetListCategory();
-            ViewData["CategoryId"] = new SelectList(products, "Id", "Id");
+            Categories = await _productService.GetListCategory();
             return Page();
         }
 
         [BindProperty]
-        public Product Product { get; set; } = default!;
+        public Product Products { get; set; } = default!;
+
+        [BindProperty]
+        public IEnumerable<Category> Categories { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            var result = await _productService.AddAsync(Product);
+            var result = await _productService.AddAsync(Products);
 
             if (result == null)
             {
