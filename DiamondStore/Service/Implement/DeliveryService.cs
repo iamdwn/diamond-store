@@ -146,7 +146,7 @@ namespace Service.Implement
                 string product = "";
                 foreach (var delivery in deliveryResponses)
                 {
-                    product = string.Join(",", delivery.Product);
+                    product = string.Join(" ,", delivery.Product);
                 }
 
                 dt.Rows.Add(item.DeliveryId, item.UserName, item.Email, item.ManagerName,
