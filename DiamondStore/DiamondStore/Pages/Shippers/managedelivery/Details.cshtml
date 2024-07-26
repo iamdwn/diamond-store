@@ -8,49 +8,51 @@
  <h1 class="text-4xl font-bold mb-4">Details</h1>
 
 <div>
-    <h4>Delivery</h4>
+    <h2 class="text-2xl">Delivery</h2>
     <hr />
     <dl class="row">
-        <!-- Delivery ID -->
-        <dt class="col-sm-3 font-weight-bold">
-            @Html.DisplayNameFor(model => model.Delivery.Id)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Delivery.Id)
-        </dd>
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 mb-8">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.Delivery.Id)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.Delivery.Status)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.Delivery.Manager)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.Delivery.Order)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        @Html.DisplayNameFor(model => model.Delivery.Shiper)
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr class="bg-white border-b">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(model => model.Delivery.Id)
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(model => model.Delivery.Status)
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(model => model.Delivery.Manager.Email)
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(model => model.Delivery.Order.Id)
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(model => model.Delivery.Shiper.Email)
+                    </th>
+                </tr>
+            </tbody>
+        </table>
 
-        <!-- Delivery Status -->
-        <dt class="col-sm-3 font-weight-bold">
-            @Html.DisplayNameFor(model => model.Delivery.Status)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Delivery.Status)
-        </dd>
-
-        <!-- Manager Email -->
-        <dt class="col-sm-3 font-weight-bold">
-            @Html.DisplayNameFor(model => model.Delivery.Manager)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Delivery.Manager.Email)
-        </dd>
-
-        <!-- Order Status -->
-        <dt class="col-sm-3 font-weight-bold">
-            @Html.DisplayNameFor(model => model.Delivery.Order)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Delivery.Order.Id)
-        </dd>
-
-        <!-- Shiper Email -->
-        <dt class="col-sm-3 font-weight-bold">
-            @Html.DisplayNameFor(model => model.Delivery.Shiper)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Delivery.Shiper.Email)
-        </dd>
-
+        <h2 class="text-2xl ml-2">Order Item</h2>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
