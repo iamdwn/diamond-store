@@ -70,7 +70,25 @@ namespace Service.Implement
 
         public async Task<Delivery> UpdateAsync(Delivery entity)
         {
-            return await _repo.UpdateAsync(entity);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Delivery entity cannot be null.");
+            }
+
+            var item = await _repo.GetByIdAsync(entity.DeliveryId.ToString());
+
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Delivery with ID {entity.DeliveryId} not found.");
+            }
+
+            //_context.Attach(item).State = EntityState.Modified;
+            item.Shiper = entity.Shiper ?? item.Shiper;
+            item.Status = entity.Status;
+            //item.Shiper.Email = entity.Shiper.Email;
+            item.Order = entity.Order ?? item.Order;
+
+            return await _repo.UpdateAsync(item);
         }
 
         public async Task<Delivery> UpdateStatus(UpdateStatusByShippersDTO entity)
