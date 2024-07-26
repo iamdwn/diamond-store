@@ -26,7 +26,7 @@ namespace Service.Services.Quartzs
             try
             {
                 var recipients = await _emailQueue.GetQueue();
-                string baseUrl = "https://localhost:7283/Account/Active";
+                string baseUrl = "https://diamond.hdang09.tech/Active";
                 if (recipients == null || !recipients.Any())
                 {
                     _logger.LogWarning("No email addresses found in the queue.");

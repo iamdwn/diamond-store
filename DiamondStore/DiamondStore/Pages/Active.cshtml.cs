@@ -30,10 +30,10 @@ namespace DiamondStore.Pages
 
             if (result)
             {
-                return RedirectToPage("/Account/Login");
+                return RedirectToPage("/Login");
             }
 
-            return RedirectToPage("/Account/Login");
+            return RedirectToPage("/Login");
         }
     }
 }

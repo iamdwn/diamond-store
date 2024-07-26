@@ -24,20 +24,24 @@ namespace DiamondStore.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var result = await _userService.Register(Input);
 
                 if (result)
                 {
                     TempData["toast-success"] = "Register success!";
-                    return RedirectToPage("/Account/Login");
+                    return RedirectToPage("/Login");
                 }
                 else
                 {
                     TempData["toast-error"] = "Register failed!";
                     return Page();
                 }
+            } else
+            {
+                TempData["toast-error"] = "Register failed!";
+                return Page();
             }
 
             // If we got this far, something failed, redisplay form
