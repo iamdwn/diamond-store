@@ -11,7 +11,7 @@ namespace DiamondStore.Pages
             HttpContext.Session.Clear();
 
             // Redirect to login page or another appropriate page
-            return RedirectToPage("/Login");
+            return RedirectToPage("/Products/Index");
         }
     }
 }
