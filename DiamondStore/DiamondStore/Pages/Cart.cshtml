@@ -1,0 +1,51 @@
+﻿@page
+@model DiamondStore.Pages.CartModel
+
+@{
+    ViewData["Title"] = "Order Items";
+}
+
+<div class="relative overflow-x-auto py-4">
+    <div class="flex justify-between my-4">
+        <h1 class="text-3xl font-bold col-span-3">Order Items</h1>
+        @{
+            var userRole = HttpContext.Session.GetInt32("UserRole");
+        }
+    </div>
+
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.OrderItem[0].Id)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.OrderItem[0].Order)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.OrderItem[0].Product)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @foreach (var item in Model.OrderItem)
+            {
+                <tr class="bg-white border-b">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayNameFor(model => model.OrderItem[0].Order)
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

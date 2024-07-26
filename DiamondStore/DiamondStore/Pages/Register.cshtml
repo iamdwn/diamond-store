@@ -6,118 +6,92 @@
 }
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-<style>
-    .no-underline {
-        text-decoration: none;
-    }
+<script src="https://cdn.tailwindcss.com"></script>
 
-    .gradient-icon {
-        font-size: 1.25rem;
-        background: white;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
 
-    .card {
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid #dee2e6;
-        border-radius: 0.75rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
 
-    .container {
-        max-width: 1200px;
-    }
+<main class="h-screen flex items-center justify-center bg-slate-200">
+    <partial name="_Toast" />
+    <div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-6xl h-[42rem]">
+        <!-- Left content -->
+        <img class="hidden bg-cover lg:block lg:w-3/5 object-cover" src="https://th.bing.com/th/id/OIP.7Hw4Ny61e_zegbB2XHQXHwHaFj?rs=1&pid=ImgDetMain" />
 
-    .card-title {
-        color: #007bff;
-    }
+        <!-- Right content -->
 
-    .input-group-text {
-        background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        border: 1px solid linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-    }
-
-        .input-group-text .gradient-icon {
-            mask: none;
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.5rem;
-            color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        }
-
-    .btn-primary {
-        background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        border-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-    }
-
-        .btn-primary:hover {
-            background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-            border-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        }
-
-    body {
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
-<partial name="_Toast" />
-
-<div class="container d-flex align-items-center justify-content-center min-vh-100">
-    <div class="row justify-content-center w-100">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <h2 class="card-title text-center mb-4 text-black-50">Register</h2>
-                    <form method="post">
-                        <div class="mb-3">
-                            <label asp-for="Input.username" class="form-label">Username</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="fullname-addon"><i class="fas fa-user gradient-icon"></i></span>
-                                <input asp-for="Input.username" class="form-control" aria-describedby="fullname-addon" />
-                            </div>
-                            <span asp-validation-for="Input.username" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.email" class="form-label">Email</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="email-addon"><i class="fas fa-envelope gradient-icon"></i></span>
-                                <input asp-for="Input.email" class="form-control" aria-describedby="email-addon" />
-                            </div>
-                            <span asp-validation-for="Input.email" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.password" class="form-label">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="password-addon"><i class="fas fa-lock gradient-icon"></i></span>
-                                <input asp-for="Input.password" class="form-control" type="password" aria-describedby="password-addon" />
-                            </div>
-                            <span asp-validation-for="Input.password" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.confirmPassword" class="form-label">Confirm Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="confirm-password-addon"><i class="fas fa-lock gradient-icon"></i></span>
-                                <input asp-for="Input.confirmPassword" class="form-control" type="password" aria-describedby="confirm-password-addon" />
-                            </div>
-                            <span asp-validation-for="Input.confirmPassword" class="text-danger"></span>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-gradient" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,174,1) 35%, rgba(0,212,255,1) 100%); border: none; color:white">Register</button>
-                        </div>
-                    </form>
-                    <div class="mt-3 text-center">
-                        <p>
-                            <a asp-page="/Account/Login" class="no-underline">Already have an account? Login Now</a>
-                        </p>
-                    </div>
+        <div class="w-full py-12 px-8 lg:w-2/5">
+            <!--Logo-->
+            <div class="flex items-center">
+                <a class="mx-auto" href="/"><img src="https://flowbite.com/docs/images/logo.svg" alt="Logo" class="h-16"></a>
+            </div>
+            <div class="sticky w-full flex justify-center items-center mt-2 text-2xl lg:text-3xl">
+                <h1 class="block text-gray-400 font-light mb-2 mt-10 px-3">Welcome to</h1>
+                <div>
+                    <h2 class="flex bg-blue-500 rounded text-white font-light pb-2 mt-10 px-3">FUMiniHotel</h2>
                 </div>
             </div>
+
+            <!-- Form -->
+            <form method="POST" class="mt-6">
+                <p class="text-red-400"></p>
+                <p class="text-red-400"></p>
+                <!-- Username-->
+                <div class="relative flex items-center">
+                    <span class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </span>
+
+                    <input asp-for="Input.username" type="text" class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Fullname">
+                </div>
+
+                <!-- Email -->
+                <div class="relative flex items-center mt-4">
+                    <span class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </span>
+
+                    <input asp-for="Input.email" class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address">
+                </div>
+
+                <!--Password-->
+                <div class="relative flex items-center mt-4">
+                    <span class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </span>
+
+                    <input asp-for="Input.password" type="password" class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password">
+                </div>
+
+                <!-- Re-type Password-->
+                <div class="relative flex items-center mt-4">
+                    <span class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </span>
+
+                    <input asp-for="Input.confirmPassword" type="password" name="repass" class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Re-type Password">
+                </div>
+
+                <!--Register-->
+                <div class="pt-1 pb-4 mb-auto text-center mt-">
+                    <button type="submit" class="my-3 inline-block w-full px-6 pb-2 pt-2.5 text-lg uppercase transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 text-white">
+                        Register
+                    </button>
+                </div>
+                <!--Login-->
+                <div class="flex items-center justify-between pb-6">
+                    <p class="mb-0 mr-2 text-black dark:text-white">Have an account?</p>
+                    <button type="button" class="inline-block border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium tracking-wide text-gray-600 hover:text-white dark:hover:text-black capitalize transition-colors duration-300 transform bg-white rounded-lg hover:bg-primary focus:outline-none focus:ring focus:ring-white focus:ring-opacity-50">
+                        <a asp-page="/Login">Login</a>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
+</main>
