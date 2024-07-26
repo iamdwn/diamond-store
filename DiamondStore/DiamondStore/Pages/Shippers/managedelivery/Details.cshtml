@@ -62,7 +62,7 @@
                     <th scope="col" class="px-6 py-3">
                         @Html.DisplayNameFor(model => model.OrderItem[0].Product)
                     </th>
-                   
+
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -72,11 +72,11 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             @Html.DisplayFor(modelItem => item.Id)
                         </th>
-                     
+
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             @Html.DisplayFor(modelItem => item.Product.Name)
                         </th>
-                       
+
                     </tr>
                 }
             </tbody>
@@ -86,7 +86,17 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Delivery.DeliveryId">Edit</a> |
+    @{
+        var userRole = HttpContext.Session.GetInt32("UserRole");
+    }
+    @if (userRole == 3)
+    {
+        <a asp-page="./Edit" asp-route-id="@Model.Delivery.DeliveryId">Edit |</a>
+    }
+    else
+    {
+        <a asp-page="./Edit" asp-route-id="@Model.Delivery.DeliveryId">Confirm |</a>
+    }
     <a asp-page="./Index">Back to List</a>
 </div>
- 
+

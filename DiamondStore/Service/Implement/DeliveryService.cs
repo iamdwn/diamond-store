@@ -107,11 +107,11 @@ namespace Service.Implement
                 throw new KeyNotFoundException($"Delivery with ID {entity.DeliveryId} not found.");
             }
 
-            _context.Attach(item).State = EntityState.Modified;
-            item.Shiper = entity.Shiper ?? item.Shiper;
-            item.Status = entity.Status;
-            item.Shiper.Email = entity.Shiper.Email ?? item.Shiper.Email;
-            item.Order = entity.Order ?? item.Order;
+            //_context.Attach(item).State = EntityState.Modified;
+            //item.Shiper = entity.Shiper ?? item.Shiper;
+            //item.Status = entity.Status;
+            //item.Shiper.Email = entity.Shiper.Email ?? item.Shiper.Email;
+            //item.Order = entity.Order ?? item.Order;
 
             await _repo.UpdateAsync(item);
         }
