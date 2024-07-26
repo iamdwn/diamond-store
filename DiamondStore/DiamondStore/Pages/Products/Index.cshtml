@@ -6,6 +6,9 @@
 }
 
 
+@{
+    var userRole = HttpContext.Session.GetInt32("UserRole");
+}
 
 <section class="container mx-auto px-4">
     <div class="sm:flex sm:items-center sm:justify-between">
@@ -15,10 +18,12 @@
             </div>
             <p class="mt-1 text-sm text-gray-500">These products has been created.</p>
         </div>
- @*        <Link href={config.routes.internshipCreate}
-              class="rounded-md bg-gradient-to-r from-primary to-secondary px-6 py-2.5 font-semibold leading-5 text-white transition-colors duration-300 focus:outline-none">
-        Add new
-        </Link> *@
+        @if (userRole == 3)
+        {
+            <div class="mb-4">
+                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" asp-page="Create">Create New</a>
+            </div>
+        }
     </div>
 
     <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -37,7 +42,7 @@
                     <span class="flex items-center gap-1 text-sm text-gray-500">
                         Carat: @Html.DisplayFor(modelItem => item.Category.Carat)
                     </span>
-                   @*  <div class="mt-4 flex md:mt-6">
+                    <div class="mt-4 flex md:mt-6">
                         @if (userRole == 3)
                         {
                             <a class="text-blue-500 hover:text-blue-700" asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a>
@@ -53,7 +58,7 @@
                                 <button type="submit" class="text-yellow-500 hover:text-yellow-700">Add to Cart</button>
                             </form>
                         }
-                    </div> *@
+                    </div>
                 </div>
             </div>
         }
