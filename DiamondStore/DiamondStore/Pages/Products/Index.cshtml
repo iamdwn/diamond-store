@@ -5,61 +5,71 @@
     ViewData["Title"] = "Products";
 }
 
-<div class="container mx-auto mt-8">
-    <h1 class="text-2xl font-bold mb-4">Products</h1>
-    @{
-        var userRole = HttpContext.Session.GetInt32("UserRole");
-    }
-    <div class="mb-4">
-        @if (userRole == 3)
-        {
-            <a class="text-sm-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" asp-page="Create">Create New</a>
-        }
-    </div>
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Id)</th>
-                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Name)</th>
-                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Description)</th>
-                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Price)</th>
-                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].IsExpired)</th>
-                    <th class="py-2 px-4 border-b"> @Html.DisplayNameFor(model => model.Products[0].Category.Carat)</th>
-                    <th class="py-2 px-4 border-b">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
 
-                @foreach (var item in Model.Products)
-                {
-                    <tr>
-                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Id)</td>
-                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Description)</td>
-                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Price)</td>
-                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.IsExpired)</td>
-                        <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Category.Carat)</td>
-                        <td class="py-2 px-4 border-b">
-                            @if (userRole == 3)
-                            {
-                                <a class="text-blue-500 hover:text-blue-700" asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a>
-                                <span class="mx-2">|</span>
-                                <a class="text-red-500 hover:text-red-700" asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
-                                <span class="mx-2">|</span>
-                            }
-                            <a class="text-green-500 hover:text-green-700" asp-page="./Details" asp-route-id="@item.ProductId">Details</a>
+
+<section class="container mx-auto px-4">
+    <div class="sm:flex sm:items-center sm:justify-between">
+        <div>
+            <div class="flex items-center gap-x-3">
+                <h2 class="text-2xl font-bold text-gray-800 ">Products</h2>
+            </div>
+            <p class="mt-1 text-sm text-gray-500">These products has been created.</p>
+        </div>
+ @*        <Link href={config.routes.internshipCreate}
+              class="rounded-md bg-gradient-to-r from-primary to-secondary px-6 py-2.5 font-semibold leading-5 text-white transition-colors duration-300 focus:outline-none">
+        Add new
+        </Link> *@
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        @foreach (var item in Model.Products)
+        {
+            <div class="w-full max-w-sm rounded-xl border border-gray-200 bg-white shadow px-2">
+                <div class="flex flex-col items-center py-6">
+                    <img class="mb-3 h-24 w-24 rounded-full p-4 shadow-lg" src="https://th.bing.com/th/id/OIP.7Hw4Ny61e_zegbB2XHQXHwHaFj?rs=1&pid=ImgDetMain" />
+                    <h5 class="mb-1 text-xl font-medium text-gray-900 text-center">@Html.DisplayFor(modelItem => item.Name)</h5>
+                    <span class="flex items-center gap-1 text-sm text-gray-500">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </span>
+                    <span class="flex items-center gap-1 text-sm text-gray-500">
+                        Price: @Html.DisplayFor(modelItem => item.Price)
+                    </span>
+                    <span class="flex items-center gap-1 text-sm text-gray-500">
+                        Carat: @Html.DisplayFor(modelItem => item.Category.Carat)
+                    </span>
+                   @*  <div class="mt-4 flex md:mt-6">
+                        @if (userRole == 3)
+                        {
+                            <a class="text-blue-500 hover:text-blue-700" asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a>
                             <span class="mx-2">|</span>
-                            @if (userRole == 1)
-                            {
+                            <a class="text-red-500 hover:text-red-700" asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                            <span class="mx-2">|</span>
+                        }
+                        <a class="text-green-500 hover:text-green-700" asp-page="./Details" asp-route-id="@item.ProductId">Details</a>
+                        <span class="mx-2">|</span>
+                        @if (userRole == 1)
+                        {
                             <form method="post" asp-page-handler="AddToCart" asp-route-id="@item.ProductId" class="inline">
                                 <button type="submit" class="text-yellow-500 hover:text-yellow-700">Add to Cart</button>
                             </form>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                        }
+                    </div> *@
+                </div>
+            </div>
+        }
     </div>
-</div>
+    <div class="mt-6 flex items-center justify-between">
+        <button class="rounded-md border bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            Previous
+        </button>
+        <div class="flex items-center space-x-2">
+            <button class="rounded-md border bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">1</button>
+            <button class="rounded-md border bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">2</button>
+            <button class="rounded-md border bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">3</button>
+        </div>
+        <button class="rounded-md border bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Next</button>
+    </div>
+</section>
+
+
+<script src="https://cdn.tailwindcss.com"></script>
