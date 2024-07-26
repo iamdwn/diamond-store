@@ -21,7 +21,7 @@
 
 }
 
-<div class="flex w-full flex-col overflow-hidden rounded-lg bg-white text-gray-600 md:w-64">
+<div class="flex w-full flex-col overflow-hidden rounded-lg bg-white text-gray-600 md:w-64 min-w-[275px]">
     <!-- Logo -->
     <div class="hidden h-16 items-center justify-center text-white md:flex">
         <h1 class="mt-2 bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-2xl font-extrabold text-transparent">
@@ -67,17 +67,17 @@
             {
                 ViewData["NavLinks"] = new[]
                 {
-            new { Href = "/Admin", IconClass = "fas fa-user", Children = "Account" },
-            new { Href = "/DeliveryPage", IconClass = "fas fa-user", Children = "Delivery" }
-            };
+                    new { Href = "/Admin", IconClass = "fas fa-user", Children = "Account" },
+                    new { Href = "/DeliveryPage", IconClass = "fas fa-user", Children = "Revenue" }
+                };
             }
 
             @if (role == 5)
             {
                 ViewData["NavLinks"] = new[]
                 {
-            new { Href = "/Warranties", IconClass = "fas fa-user", Children = "Warranty Management" }
-            };
+                    new { Href = "/Warranties", IconClass = "fas fa-user", Children = "Warranty Management" }
+                };
             }
 
             @foreach (var link in (IEnumerable<dynamic>)ViewData["NavLinks"])
