@@ -27,9 +27,6 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    @Html.DisplayNameFor(model => model.user[0].UserId)
-                </th>
-                <th scope="col" class="px-6 py-3">
                     @Html.DisplayNameFor(model => model.user[0].Username)
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -50,9 +47,6 @@
             @foreach (var item in Model.user)
             {
                 <tr>
-                    <td scope="col" class="px-6 py-3">
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </td>
                     <td scope="col" class="px-6 py-3">
                         @Html.DisplayFor(modelItem => item.Username)
                     </td>
