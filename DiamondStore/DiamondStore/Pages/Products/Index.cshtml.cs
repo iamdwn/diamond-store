@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Service.Interface;
+using Service;
+using Service.Dtos;
 
 namespace DiamondStore.Pages.Products
 {
@@ -31,11 +33,8 @@ namespace DiamondStore.Pages.Products
 
         public async Task<IActionResult> OnPostAddToCartAsync(string id)
         {
-            var newOrderItem = new OrderItem
-            {
-                ProductId = Guid.Parse(id),
-            };
-            await _orderItemService.AddAsync(newOrderItem);
+            var user = HttpContext.Session.GetObjectFromJson<UserDto>("User");
+            await _orderItemService.AddProductToOrder(user.userId.ToString(), id);
             return RedirectToPage();
         }
     }
