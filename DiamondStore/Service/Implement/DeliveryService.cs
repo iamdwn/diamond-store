@@ -140,8 +140,17 @@ namespace Service.Implement
                 new DataColumn("DeliveryStatus")
             });
 
+            
+
             foreach (var item in deliveryResponses) {
-                dt.Rows.Add(item.DeliveryId, item.UserName, item.Email, item.ManagerName, item.ProductPrice, item.EndPrice, item.OrderDate, item.Product, item.DeliveryStatus);
+                string product = "";
+                foreach (var delivery in deliveryResponses)
+                {
+                    product = string.Join(",", delivery.Product);
+                }
+
+                dt.Rows.Add(item.DeliveryId, item.UserName, item.Email, item.ManagerName,
+                    item.ProductPrice, item.EndPrice, item.OrderDate,product, item.DeliveryStatus);
             }
 
             using (XLWorkbook wb = new XLWorkbook())

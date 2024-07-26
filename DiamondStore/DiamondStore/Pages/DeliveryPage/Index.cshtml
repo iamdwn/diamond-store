@@ -7,8 +7,11 @@
 <div class="relative overflow-x-auto py-4">
     <div class="flex justify-between my-4">
         <h1 class="text-3xl font-bold col-span-3">Monthly Revenue</h1>
-
-        <a class="btn btn-primary" asp-action="ExportRevenue">Export Report</a>
+        <form method="post">
+            <button type="submit" class="btn btn-primary">
+                Export file
+            </button>
+        </form>
 
     </div>
 
