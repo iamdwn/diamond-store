@@ -23,6 +23,7 @@ namespace DiamondStore.Pages
         {
             string userId = HttpContext.Session.GetString("UserId");
             OrderItem = await _context.GetItemOfCartByUserId(userId);
+            if (OrderItem == null) { OrderItem = new List<OrderItem>(); }
         }
     }
 }
