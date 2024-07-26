@@ -19,6 +19,11 @@ namespace DiamondStore.Pages.DeliveryPage
         public int CurrentPage { get; set; } = 1;
         public int TotalPages { get; set; }
 
+        public async Task<IActionResult> OnPostAsync()
+        {
+            var file = await _deliveryService.ExportRevenue();
+            return file;
+        }
         public async Task<IActionResult> OnGetAsync(int currentPage = 1)
         {
             //Check xem nguoi dang dang nhap co phai la admin khong
