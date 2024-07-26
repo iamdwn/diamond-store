@@ -117,8 +117,8 @@ namespace Service.Implement
                 OrderItem orderItem = new OrderItem();
                 orderItem.OrderId = existOrder.OrderId;
                 orderItem.ProductId = Guid.Parse(productId);
-                var existProduct = await _productRepo.Find(x => x.ProductId == Guid.Parse(productId));
-                existOrder.TotalAmount = existOrder.TotalAmount + existProduct.Price;
+                var existProduct = await _productRepo.FindAsync(x => x.ProductId == Guid.Parse(productId));
+                existOrder.TotalAmount = existOrder.TotalAmount + existProduct.First().Price;
                 await _itemRepo.AddAsync(orderItem);
                 await _orderRepo.UpdateAsync(existOrder);
             }
