@@ -40,7 +40,7 @@ namespace Service.Services.Quartzs
                     if (recipient != null)
                     {
                         var subject = "Active Link";
-                        var body = $"https://localhost:7028/Account/Active?email={recipient}";
+                        var body = $"{baseUrl}?email={recipient}";
                         //var body = $@"<!DOCTYPE html>
                         //                <html>
                         //                <head>
