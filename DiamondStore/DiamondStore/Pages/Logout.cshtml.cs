@@ -12,6 +12,6 @@ namespace DiamondStore.Pages
 
             // Redirect to login page or another appropriate page
             return RedirectToPage("/Products/Index");
-        }
+        }   
     }
 }
