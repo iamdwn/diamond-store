@@ -1,7 +1,6 @@
 ﻿using BussinessObject.Models;
 using Repository.Interface;
 using Service.Interface;
-using System;
 using System.Linq.Expressions;
 
 namespace Service.Implement
@@ -108,7 +107,7 @@ namespace Service.Implement
                 Order order = new Order();
                 order.UserId = Guid.Parse(userId);
                 order.OrderDate = DateOnly.FromDateTime(DateTime.Now);
-                order.Status = "Pending";
+                order.Status = "Cart";
                 await _orderRepo.AddAsync(order);
             }
             existOrderList = (await _orderRepo.FindAsync(x => x.UserId.ToString() == userId)).ToList();
@@ -123,6 +122,17 @@ namespace Service.Implement
                 await _itemRepo.AddAsync(orderItem);
                 await _orderRepo.UpdateAsync(existOrder);
             }
+        }
+
+        public async Task<List<OrderItem>> GetItemOfCartByUserId(string userId)
+        {
+            if (userId == null)
+            {
+                throw new ArgumentException("userId is null");
+            }
+            var orderList = (await _orderRepo.FindAsync(x => x.UserId == Guid.Parse(userId))).ToList();
+            var cart = orderList.FirstOrDefault(x => x.Status == "Cart");
+            return (await _itemRepo.FindAsync(x => x.OrderId == cart.OrderId)).ToList();
         }
     }
 }
