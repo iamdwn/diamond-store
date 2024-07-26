@@ -87,4 +87,10 @@ app.UseAuthorization();
 app.MapRazorPages();
 app.MapFallbackToPage("/Login");
 
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/Products/Index");
+    return Task.CompletedTask;
+});
+
 app.Run();
