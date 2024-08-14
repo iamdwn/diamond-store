@@ -26,5 +26,5 @@ Welcome to the DiamondStore, that is an advanced e-commerce web application desi
 To run this project locally, follow step:
 
    ```bash
-   git clone https://github.com/iamdwn/DiamondStore.git
+   git clone https://github.com/iamdwn/diamond-store.git
 
